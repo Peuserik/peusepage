@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'en' }}" data-theme="{{ site.data.config.themes.default }}" data-mode="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ page.title | default: site.title }}</title>
+  {% seo %}
+
+  <!-- Google Fonts: cycling welcome fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Grotesk:wght@700&family=Bebas+Neue&family=Cinzel:wght@700&family=Special+Elite&family=Major+Mono+Display&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+
+  <!-- Embed site data for JS -->
+  <script>
+    window.SITE = {
+      lang: '{{ page.lang | default: "en" }}',
+      translations: {{ site.data.translations | jsonify }},
+      config: {{ site.data.config | jsonify }}
+    };
+  </script>
+</head>
+<body class="{{ page.body_class }}">
+  {{ content }}
+  <script src="{{ '/assets/js/settings.js' | relative_url }}"></script>
+  {% if page.scripts %}
+    {% for script in page.scripts %}
+      <script src="{{ script | relative_url }}"></script>
+    {% endfor %}
+  {% endif %}
+</body>
+</html>

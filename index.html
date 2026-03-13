@@ -1,0 +1,46 @@
+---
+layout: default
+title: Welcome
+body_class: page-landing
+lang: en
+scripts:
+  - /assets/js/landing.js
+  - /assets/js/transition.js
+---
+
+<!-- Monitor shell -->
+<div class="monitor" id="monitor">
+
+  <!-- Bezel/Frame (NOT clickable to enter) -->
+  <div class="monitor__frame">
+
+    <!-- Screen (clickable to enter) -->
+    <div class="monitor__screen scanlines" id="screen" role="button" tabindex="0"
+         aria-label="Click anywhere to enter">
+
+      <!-- Screensaver background particles -->
+      <canvas class="screensaver-canvas" id="screensaver-canvas" aria-hidden="true"></canvas>
+
+      <!-- Certificate -->
+      <div class="screen__certificate">
+        {% include certificate.html size="large" %}
+      </div>
+
+      <!-- Welcome text -->
+      <div class="screen__welcome" aria-live="polite">
+        <span class="welcome-text" id="welcome-text">Welcome</span>
+      </div>
+
+      <!-- Click hint -->
+      <p class="screen__hint" id="screen-hint" data-i18n="tagline_cta">Click anywhere to enter</p>
+
+    </div><!-- /.monitor__screen -->
+
+    <!-- Control buttons (bottom-right of frame) -->
+    {% include controls.html %}
+
+  </div><!-- /.monitor__frame -->
+</div><!-- /.monitor -->
+
+<!-- OS-style transition overlay -->
+<div id="transition-overlay" aria-hidden="true"></div>

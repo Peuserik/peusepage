@@ -1,0 +1,9 @@
+<div class="certificate {{ include.size | default: 'large' }}" aria-label="Business card">
+  <div class="certificate__inner">
+    <div class="certificate__seal" aria-hidden="true">❋</div>
+    <p class="certificate__name">{{ site.data.config.person.name }}</p>
+    <p class="certificate__title">{{ site.data.config.person.title }}</p>
+    <hr class="certificate__divider" />
+    <p class="certificate__tagline">{{ site.data.config.person.tagline }}</p>
+  </div>
+</div>

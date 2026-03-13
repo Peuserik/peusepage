@@ -1,0 +1,163 @@
+---
+layout: default
+title: Home
+body_class: page-office
+lang: en
+scripts:
+  - /assets/js/settings.js
+  - /assets/js/office.js
+---
+
+<div class="office" id="office">
+
+  <!-- ── Background room ──────────────────────────────── -->
+  <div class="room">
+
+    <!-- Left wall + window -->
+    <div class="wall wall--left">
+      <div class="window" id="clickable-window" role="button" tabindex="0" aria-label="Open hobbies">
+        <div class="window__frame">
+          <div class="window__sky"></div>
+          <div class="window__landscape">
+            <div class="landscape__sun"></div>
+            <div class="landscape__tree landscape__tree--1"></div>
+            <div class="landscape__tree landscape__tree--2"></div>
+            <div class="landscape__grass"></div>
+            <div class="landscape__car"></div>
+            <div class="landscape__ball"></div>
+          </div>
+        </div>
+        <div class="window__sill"></div>
+      </div>
+    </div>
+
+    <!-- Back wall (top) -->
+    <div class="wall wall--back">
+      <!-- Certificate hung by thread -->
+      <div class="certificate-wall" id="clickable-certificate" role="button" tabindex="0" aria-label="Open CV">
+        <div class="certificate-wall__thread"></div>
+        <div class="certificate-wall__frame">
+          {% include certificate.html size="small" %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right wall + pinboard -->
+    <div class="wall wall--right">
+      <div class="pinboard" id="clickable-pinboard" role="button" tabindex="0" aria-label="Open updates">
+        <div class="pinboard__surface">
+          <div class="pinboard__pin pinboard__pin--1"></div>
+          <div class="pinboard__pin pinboard__pin--2"></div>
+          <div class="pinboard__note pinboard__note--1"></div>
+          <div class="pinboard__note pinboard__note--2"></div>
+          <div class="pinboard__note pinboard__note--3"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.room -->
+
+  <!-- ── Foreground desk ──────────────────────────────── -->
+  <div class="desk-area">
+
+    <!-- Desk surface -->
+    <div class="desk">
+      <!-- Lamp -->
+      <div class="lamp">
+        <div class="lamp__arm"></div>
+        <div class="lamp__head">
+          <div class="lamp__glow"></div>
+        </div>
+        <div class="lamp__base"></div>
+      </div>
+
+      <!-- Coffee cup -->
+      <div class="coffee">
+        <div class="coffee__steam">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="coffee__cup">
+          <div class="coffee__liquid"></div>
+        </div>
+        <div class="coffee__saucer"></div>
+      </div>
+
+      <!-- Monitor (clickable) -->
+      <div class="desk-monitor" id="clickable-monitor" role="button" tabindex="0" aria-label="Open desktop">
+        <div class="desk-monitor__stand"></div>
+        <div class="desk-monitor__body">
+          <div class="desk-monitor__bezel">
+            <canvas class="matrix-canvas" id="matrix-canvas" aria-hidden="true"></canvas>
+            <!-- Desktop state shown when CV popup active -->
+            <div class="desk-monitor__desktop" id="monitor-desktop" aria-hidden="true">
+              <div class="desktop-bar"></div>
+              <div class="desktop-file">
+                <div class="file-icon">📄</div>
+                <div class="file-lines">
+                  <div></div><div></div><div></div><div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="desk-monitor__brand">●</div>
+      </div>
+
+      <!-- Mouse + mousepad -->
+      <div class="mousepad">
+        <div class="mouse">
+          <div class="mouse__body">
+            <div class="mouse__btn mouse__btn--left"></div>
+            <div class="mouse__btn mouse__btn--right"></div>
+            <div class="mouse__wheel"></div>
+          </div>
+          <div class="mouse__cable"></div>
+        </div>
+      </div>
+
+    </div><!-- /.desk -->
+
+    <!-- Chair -->
+    <div class="chair">
+      <div class="chair__back"></div>
+      <div class="chair__seat"></div>
+      <div class="chair__pole"></div>
+      <div class="chair__base"></div>
+    </div>
+
+  </div><!-- /.desk-area -->
+
+</div><!-- /.office -->
+
+<!-- ── Desktop popup (app grid) ──────────────────────── -->
+<div class="popup-overlay" id="popup-desktop" role="dialog" aria-modal="true" aria-label="Desktop">
+  <div class="popup-window popup-window--desktop">
+    <button class="popup-close" data-close="popup-desktop" aria-label="Close">✕</button>
+    <div class="desktop-apps">
+      <button class="app-icon" data-open="popup-cv">
+        <span class="app-icon__img">📋</span>
+        <span class="app-icon__label" data-i18n="popup_cv">CV</span>
+      </button>
+      <button class="app-icon" data-open="popup-hobbies">
+        <span class="app-icon__img">🎮</span>
+        <span class="app-icon__label" data-i18n="popup_hobbies">Hobbies</span>
+      </button>
+      <button class="app-icon" data-open="popup-pinboard">
+        <span class="app-icon__img">📌</span>
+        <span class="app-icon__label" data-i18n="popup_pinboard">Updates</span>
+      </button>
+      <a class="app-icon" href="{{ site.data.config.social.github }}" target="_blank" rel="noopener">
+        <span class="app-icon__img">⌥</span>
+        <span class="app-icon__label">GitHub</span>
+      </a>
+      <a class="app-icon" href="mailto:{{ site.data.config.social.email }}">
+        <span class="app-icon__img">✉</span>
+        <span class="app-icon__label" data-i18n="contact_email">Email</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% include popups/cv.html %}
+{% include popups/hobbies.html %}
+{% include popups/pinboard.html %}

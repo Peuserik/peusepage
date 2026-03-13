@@ -1,0 +1,573 @@
+// ============================================================
+// OFFICE SCENE — CSS art room
+// ============================================================
+
+// ── Page shell ───────────────────────────────────────────────
+.page-office {
+  overflow: hidden;
+}
+
+.office {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg-room);
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Room (background layer) ──────────────────────────────────
+.room {
+  position: absolute;
+  inset: 0 0 35% 0;
+  display: flex;
+  align-items: stretch;
+}
+
+// ── Walls ────────────────────────────────────────────────────
+.wall {
+  &--left  { width: 30%; background: linear-gradient(to right, #2a1a0c, var(--color-bg-room)); position: relative; }
+  &--back  { flex: 1; background: var(--color-bg-room); position: relative; display: flex; align-items: flex-start; justify-content: center; padding-top: 1.5rem; }
+  &--right { width: 20%; background: linear-gradient(to left, #2a1a0c, var(--color-bg-room)); position: relative; }
+}
+
+// ── Window ───────────────────────────────────────────────────
+.window {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  cursor: pointer;
+
+  &:focus-visible { outline: 3px solid var(--color-accent); border-radius: 4px; }
+
+  &__frame {
+    border: 6px solid var(--color-border);
+    background: #87ceeb;
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.3), 0 0 0 2px var(--color-desk);
+
+    // Window panes (cross)
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, transparent calc(50% - 2px), var(--color-border) calc(50% - 2px), var(--color-border) calc(50% + 2px), transparent calc(50% + 2px)),
+        linear-gradient(to bottom, transparent calc(50% - 2px), var(--color-border) calc(50% - 2px), var(--color-border) calc(50% + 2px), transparent calc(50% + 2px));
+      z-index: 2;
+    }
+  }
+
+  &__sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, #87ceeb 0%, #c8e8f8 60%, #e8f8d0 100%);
+  }
+
+  &__sill {
+    height: 10px;
+    background: var(--color-border);
+    border-radius: 0 0 3px 3px;
+  }
+}
+
+// ── Landscape inside window ───────────────────────────────────
+.landscape {
+  &__sun {
+    position: absolute;
+    top: 12%;
+    right: 20%;
+    width: 20px;
+    height: 20px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #ffd700;
+  }
+
+  &__grass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(to top, #4a8a30 0%, #6ab840 100%);
+    border-radius: 0 0 2px 2px;
+  }
+
+  &__tree {
+    position: absolute;
+    bottom: 28%;
+    &::before { // trunk
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 16px;
+      background: #5c3a1e;
+    }
+    &::after { // canopy
+      content: '';
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 22px solid #3a8020;
+    }
+    &--1 { left: 15%; }
+    &--2 { left: 55%; bottom: 30%; }
+  }
+
+  &__car {
+    position: absolute;
+    bottom: 30%;
+    left: 20%;
+    width: 28px;
+    height: 14px;
+    background: #cc3333;
+    border-radius: 4px 6px 2px 2px;
+    &::before { // wheels
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 2px;
+      width: 8px;
+      height: 8px;
+      background: #111;
+      border-radius: 50%;
+      box-shadow: 14px 0 0 #111;
+    }
+  }
+
+  &__ball {
+    position: absolute;
+    bottom: 31%;
+    right: 18%;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle at 35% 35%, #ff6060, #cc1010);
+    border-radius: 50%;
+  }
+}
+
+// ── Certificate on wall ───────────────────────────────────────
+.certificate-wall {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+
+  &:focus-visible { outline: 3px solid var(--color-accent); border-radius: 4px; }
+
+  &__thread {
+    width: 120px;
+    height: 12px;
+    border-top: none;
+    border-left: 1px solid var(--color-accent);
+    border-right: 1px solid var(--color-accent);
+    border-bottom: none;
+    // Simulate a hanging thread arc with a pseudo element
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -1px;
+      right: -1px;
+      height: 12px;
+      border: 1px solid var(--color-accent);
+      border-top: none;
+      border-radius: 0 0 50% 50%;
+    }
+  }
+
+  &__frame {
+    border: 6px solid var(--color-border);
+    padding: 4px;
+    background: var(--color-desk);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.6), inset 0 0 6px rgba(0,0,0,0.4);
+    border-radius: 2px;
+    transform: rotate(-1deg);
+  }
+}
+
+// ── Pinboard ──────────────────────────────────────────────────
+.pinboard {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  cursor: pointer;
+
+  &:focus-visible { outline: 3px solid var(--color-accent); border-radius: 4px; }
+
+  &__surface {
+    background: #c8a060;
+    border: 4px solid #8a6030;
+    border-radius: 4px;
+    aspect-ratio: 3/4;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.5);
+  }
+
+  &__pin {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle at 35% 35%, #ff4444, #aa0000);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    &--1 { top: 10%;  left:  50%; transform: translateX(-50%); }
+    &--2 { top: 52%;  left:  50%; transform: translateX(-50%); }
+  }
+
+  &__note {
+    position: absolute;
+    background: #f5f0c0;
+    border-radius: 2px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+    &--1 { top: 12%; left: 10%;  width: 75%; height: 35%; transform: rotate(-1.5deg); }
+    &--2 { top: 54%; left: 8%;   width: 38%; height: 30%; transform: rotate(1deg); }
+    &--3 { top: 56%; left: 52%;  width: 36%; height: 28%; transform: rotate(-0.5deg); background: #c8f0c0; }
+  }
+}
+
+// ── Desk area (foreground) ────────────────────────────────────
+.desk-area {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.desk {
+  width: 100%;
+  height: 65%;
+  background: linear-gradient(to bottom, var(--color-desk) 0%, var(--color-desk-shadow) 100%);
+  border-radius: 6px 6px 0 0;
+  border-top: 4px solid #8a5a2a;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2%;
+  padding: 0 4% 4%;
+
+  // Desk legs
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    width: 6%;
+    height: 30px;
+    background: var(--color-desk-shadow);
+  }
+  &::before { left: 8%; }
+  &::after  { right: 8%; }
+}
+
+// ── Lamp ─────────────────────────────────────────────────────
+.lamp {
+  position: absolute;
+  left: 6%;
+  bottom: 60%;
+  transform-origin: bottom center;
+
+  &__base {
+    width: 30px;
+    height: 6px;
+    background: #3a2a1a;
+    border-radius: 3px;
+    margin: 0 auto;
+  }
+
+  &__arm {
+    width: 4px;
+    height: 40px;
+    background: #4a3a2a;
+    margin: 0 auto;
+  }
+
+  &__head {
+    width: 24px;
+    height: 12px;
+    background: #5a4a2a;
+    border-radius: 12px 12px 0 0;
+    margin: 0 auto;
+    position: relative;
+    transform: rotate(-30deg);
+  }
+
+  &__glow {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 20px;
+    background: radial-gradient(ellipse, rgba(255,240,160,0.4) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
+
+// ── Coffee cup ───────────────────────────────────────────────
+.coffee {
+  position: absolute;
+  right: 8%;
+  bottom: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__steam {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 2px;
+    span {
+      display: block;
+      width: 3px;
+      height: 10px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 2px;
+      animation: steam 2s ease-in-out infinite;
+      &:nth-child(2) { animation-delay: 0.4s; }
+      &:nth-child(3) { animation-delay: 0.8s; }
+    }
+  }
+
+  &__cup {
+    width: 24px;
+    height: 20px;
+    background: #e8e0d0;
+    border-radius: 0 0 8px 8px;
+    border: 1.5px solid #c0b090;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__liquid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: #5a2e10;
+    border-radius: 0 0 6px 6px;
+  }
+
+  &__saucer {
+    width: 32px;
+    height: 5px;
+    background: #e8e0d0;
+    border-radius: 50%;
+    border: 1px solid #c0b090;
+    margin-top: 1px;
+  }
+}
+
+@keyframes steam {
+  0%, 100% { transform: translateY(0) scaleX(1); opacity: 0.4; }
+  50%       { transform: translateY(-6px) scaleX(0.6); opacity: 0.1; }
+}
+
+// ── Desk monitor ─────────────────────────────────────────────
+.desk-monitor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+
+  &:focus-visible { outline: 3px solid var(--color-accent); border-radius: 4px; }
+
+  &__body {
+    width: clamp(100px, 18vw, 200px);
+    background: #1a1208;
+    border: 3px solid #2a1e10;
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7), 0 0 0 1px #0a0804;
+  }
+
+  &__bezel {
+    background: #000;
+    aspect-ratio: 4/3;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__stand {
+    width: 20px;
+    height: 20px;
+    background: #1a1208;
+    clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+    margin-top: -2px;
+  }
+
+  &__brand {
+    font-size: 0.5rem;
+    color: #3a2a10;
+    margin-top: 2px;
+  }
+
+  &__desktop {
+    position: absolute;
+    inset: 0;
+    background: #1a2a4a;
+    display: none;
+    flex-direction: column;
+    padding: 4px;
+
+    &[aria-hidden="false"] { display: flex; }
+  }
+}
+
+.matrix-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.desktop-bar {
+  height: 8px;
+  background: #2a4080;
+  margin-bottom: 4px;
+  border-radius: 1px;
+}
+
+.desktop-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+
+  .file-icon { font-size: 1.2rem; }
+
+  .file-lines {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    div {
+      height: 2px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 1px;
+    }
+  }
+}
+
+// ── Mouse + mousepad ─────────────────────────────────────────
+.mousepad {
+  width: clamp(60px, 10vw, 120px);
+  height: clamp(40px, 6vw, 80px);
+  background: #1a1a1a;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.mouse {
+  position: relative;
+
+  &__body {
+    width: 20px;
+    height: 28px;
+    background: #e0d8d0;
+    border-radius: 10px 10px 8px 8px;
+    border: 1px solid #b0a898;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__btn {
+    position: absolute;
+    top: 0;
+    height: 45%;
+    &--left  { left: 0;   width: 50%; border-right: 1px solid #b0a898; }
+    &--right { right: 0;  width: 50%; }
+  }
+
+  &__wheel {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: #888;
+    border-radius: 2px;
+  }
+
+  &__cable {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 16px;
+    background: #555;
+    border-radius: 1px;
+  }
+}
+
+// ── Chair ────────────────────────────────────────────────────
+.chair {
+  width: 60%;
+  height: 35%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__back {
+    width: 55%;
+    height: 55%;
+    background: #1a1a1a;
+    border-radius: 6px 6px 0 0;
+    border: 2px solid #333;
+    margin-bottom: -4px;
+    background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+  }
+
+  &__seat {
+    width: 65%;
+    height: 18%;
+    background: #222;
+    border-radius: 4px;
+    border: 2px solid #333;
+  }
+
+  &__pole {
+    width: 6px;
+    height: 20%;
+    background: #555;
+    margin: 0 auto;
+  }
+
+  &__base {
+    width: 50%;
+    height: 6px;
+    background: #444;
+    border-radius: 3px;
+  }
+}

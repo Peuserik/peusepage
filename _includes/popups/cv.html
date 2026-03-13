@@ -1,0 +1,37 @@
+<div class="popup-overlay" id="popup-cv" role="dialog" aria-modal="true" aria-label="CV">
+  <div class="popup-window popup-window--cv">
+    <button class="popup-close" data-close="popup-cv" aria-label="Close">✕</button>
+    <div class="cv-popup">
+      <div class="cv-popup__header">
+        {% include certificate.html size="small" %}
+      </div>
+      <p class="cv-popup__summary">{{ site.data.config.cv_summary }}</p>
+      <div class="cv-popup__links">
+        <a class="cv-link cv-link--linkedin" href="{{ site.data.config.social.linkedin }}" target="_blank" rel="noopener">
+          <span class="cv-link__icon">in</span>
+          <span data-i18n="open_linkedin">Open LinkedIn</span>
+        </a>
+        <a class="cv-link cv-link--xing" href="{{ site.data.config.social.xing }}" target="_blank" rel="noopener">
+          <span class="cv-link__icon">X</span>
+          <span data-i18n="open_xing">Open Xing</span>
+        </a>
+        <a class="cv-link cv-link--github" href="{{ site.data.config.social.github }}" target="_blank" rel="noopener">
+          <span class="cv-link__icon">⌥</span>
+          GitHub: {{ site.data.config.social.github | split: '/' | last }}
+        </a>
+        <a class="cv-link cv-link--x" href="https://x.com/{{ site.data.config.social.x_handle | remove: '@' }}" target="_blank" rel="noopener">
+          <span class="cv-link__icon">𝕏</span>
+          {{ site.data.config.social.x_handle }}
+        </a>
+        <a class="cv-link cv-link--threads" href="https://threads.net/{{ site.data.config.social.threads_handle | remove: '@' }}" target="_blank" rel="noopener">
+          <span class="cv-link__icon">@</span>
+          {{ site.data.config.social.threads_handle }}
+        </a>
+        <a class="cv-link cv-link--email" href="mailto:{{ site.data.config.social.email }}">
+          <span class="cv-link__icon">✉</span>
+          <span data-i18n="contact_email">Send Email</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

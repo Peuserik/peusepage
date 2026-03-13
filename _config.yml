@@ -1,0 +1,22 @@
+title: peusepage
+description: Personal portfolio
+baseurl: ""
+url: "https://example.com" # TODO: replace with your custom domain
+
+# Build settings
+markdown: kramdown
+theme: null
+plugins:
+  - jekyll-seo-tag
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - node_modules
+
+# Sass
+sass:
+  style: compressed
+  sass_dir: assets/css

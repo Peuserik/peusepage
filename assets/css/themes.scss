@@ -1,0 +1,106 @@
+// ============================================================
+// THEMES — CSS custom properties per theme + dark/light mode
+// ============================================================
+
+// ── Warm theme (default) ────────────────────────────────────
+:root,
+[data-theme="warm"] {
+  --color-bg: #1a1008;
+  --color-bg-screen: #0a0a0f;
+  --color-bg-room: #2b1f14;
+  --color-surface: #2e1e0f;
+  --color-surface-2: #3d2a18;
+  --color-border: #6b4c2a;
+  --color-text: #f0deb4;
+  --color-text-muted: #a08060;
+  --color-accent: #e8a040;
+  --color-accent-2: #c06020;
+  --color-glow: rgba(232, 160, 64, 0.4);
+  --color-monitor-frame: #1c1209;
+  --color-monitor-bezel: #2a1a0c;
+  --color-desk: #5c3a1e;
+  --color-desk-shadow: #3a2210;
+  --font-ui: 'Space Grotesk', system-ui, sans-serif;
+}
+
+[data-theme="warm"][data-mode="light"] {
+  --color-bg: #f5e8d0;
+  --color-bg-screen: #e8d8b0;
+  --color-bg-room: #f0d8b0;
+  --color-surface: #e0c898;
+  --color-surface-2: #d4b880;
+  --color-border: #a07848;
+  --color-text: #2a1a08;
+  --color-text-muted: #6a4a28;
+  --color-accent: #c07820;
+  --color-accent-2: #a05010;
+  --color-glow: rgba(192, 120, 32, 0.3);
+}
+
+// ── Cool theme ───────────────────────────────────────────────
+[data-theme="cool"] {
+  --color-bg: #080e1a;
+  --color-bg-screen: #050810;
+  --color-bg-room: #0d1828;
+  --color-surface: #0e1e30;
+  --color-surface-2: #152840;
+  --color-border: #2a4870;
+  --color-text: #b0d4f8;
+  --color-text-muted: #5880a8;
+  --color-accent: #40a0e8;
+  --color-accent-2: #2060c0;
+  --color-glow: rgba(64, 160, 232, 0.4);
+  --color-monitor-frame: #080e18;
+  --color-monitor-bezel: #0c1820;
+  --color-desk: #1a2a40;
+  --color-desk-shadow: #0e1a28;
+  --font-ui: 'Space Grotesk', system-ui, sans-serif;
+}
+
+[data-theme="cool"][data-mode="light"] {
+  --color-bg: #d0e4f8;
+  --color-bg-screen: #b8d4f0;
+  --color-bg-room: #c8dced;
+  --color-surface: #b0c8e0;
+  --color-surface-2: #98b4d0;
+  --color-border: #5888b8;
+  --color-text: #08182a;
+  --color-text-muted: #3858a0;
+  --color-accent: #1868c0;
+  --color-accent-2: #0a4898;
+  --color-glow: rgba(24, 104, 192, 0.3);
+}
+
+// ── Mono theme ───────────────────────────────────────────────
+[data-theme="mono"] {
+  --color-bg: #080808;
+  --color-bg-screen: #040404;
+  --color-bg-room: #101010;
+  --color-surface: #181818;
+  --color-surface-2: #202020;
+  --color-border: #404040;
+  --color-text: #e0e0e0;
+  --color-text-muted: #808080;
+  --color-accent: #c0c0c0;
+  --color-accent-2: #808080;
+  --color-glow: rgba(192, 192, 192, 0.3);
+  --color-monitor-frame: #080808;
+  --color-monitor-bezel: #101010;
+  --color-desk: #1a1a1a;
+  --color-desk-shadow: #0a0a0a;
+  --font-ui: 'Major Mono Display', monospace;
+}
+
+[data-theme="mono"][data-mode="light"] {
+  --color-bg: #f0f0f0;
+  --color-bg-screen: #e0e0e0;
+  --color-bg-room: #e8e8e8;
+  --color-surface: #d0d0d0;
+  --color-surface-2: #c0c0c0;
+  --color-border: #808080;
+  --color-text: #101010;
+  --color-text-muted: #404040;
+  --color-accent: #202020;
+  --color-accent-2: #404040;
+  --color-glow: rgba(32, 32, 32, 0.3);
+}

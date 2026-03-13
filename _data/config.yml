@@ -1,0 +1,64 @@
+# ============================================================
+# ★  MAIN CONTENT FILE — edit this to update your site ★
+# ============================================================
+
+person:
+  name: "Alexander Meyer"
+  title: "IT Operations & Strategy Manager"
+  tagline: "Bridging technology and business — one system at a time."
+
+social:
+  linkedin: "https://linkedin.com/in/placeholder"
+  xing: "https://xing.com/profile/placeholder"
+  x_handle: "@placeholder"
+  threads_handle: "@placeholder"
+  github: "https://github.com/placeholder"
+  email: "hello@example.com"
+
+cv_summary: >
+  Experienced IT leader with a passion for aligning technology strategy
+  with business goals. Background in cloud infrastructure, IT governance,
+  and cross-functional team management. Committed to driving digital
+  transformation with pragmatic, people-first approaches.
+
+pinboard:
+  currently_working_on:
+    - "Home automation dashboard v2"
+    - "Cloud migration planning"
+    - "IT governance framework rollout"
+  latest_events:
+    - "Attended IT Leadership Summit 2024"
+    - "Completed AWS Solutions Architect certification"
+    - "Launched internal DevOps enablement programme"
+
+hobbies:
+  - icon: "🎮"
+    label_en: "Gaming"
+    label_de: "Spielen"
+    description_en: "PC & console games, strategy and RPGs."
+    description_de: "PC- und Konsolenspiele, Strategie und RPGs."
+  - icon: "⚡"
+    label_en: "Electronic Engineering"
+    label_de: "Elektronik"
+    description_en: "Tinkering with microcontrollers, sensors and circuits."
+    description_de: "Basteln mit Mikrocontrollern, Sensoren und Schaltkreisen."
+  - icon: "🏠"
+    label_en: "Home Automation"
+    label_de: "Heimautomatisierung"
+    description_en: "Building smart home setups with Home Assistant and custom integrations."
+    description_de: "Smart-Home-Systeme mit Home Assistant und eigenen Integrationen."
+  - icon: "📚"
+    label_en: "Reading"
+    label_de: "Lesen"
+    description_en: "Tech literature, science fiction and management books."
+    description_de: "Technikbücher, Science-Fiction und Management-Literatur."
+
+themes:
+  default: "warm"   # options: warm | cool | mono
+  available:
+    - id: "warm"
+      label: "Warm"
+    - id: "cool"
+      label: "Cool"
+    - id: "mono"
+      label: "Mono"

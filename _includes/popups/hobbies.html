@@ -1,0 +1,21 @@
+<div class="popup-overlay" id="popup-hobbies" role="dialog" aria-modal="true" aria-label="Hobbies">
+  <div class="popup-window popup-window--hobbies">
+    <button class="popup-close" data-close="popup-hobbies" aria-label="Close">✕</button>
+    <h2 class="popup-title" data-i18n="popup_hobbies">Hobbies</h2>
+    <ul class="hobbies-list">
+      {% for hobby in site.data.config.hobbies %}
+      <li class="hobby-item">
+        <span class="hobby-item__icon" aria-hidden="true">{{ hobby.icon }}</span>
+        <div class="hobby-item__body">
+          <strong class="hobby-item__label"
+            data-label-en="{{ hobby.label_en }}"
+            data-label-de="{{ hobby.label_de }}">{{ hobby.label_en }}</strong>
+          <p class="hobby-item__desc"
+            data-desc-en="{{ hobby.description_en }}"
+            data-desc-de="{{ hobby.description_de }}">{{ hobby.description_en }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,239 @@
+// ============================================================
+// LANDING PAGE — monitor frame, screensaver, certificate, controls
+// ============================================================
+
+// ── Monitor shell ────────────────────────────────────────────
+.monitor {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.monitor__frame {
+  flex: 1;
+  background: var(--color-monitor-frame);
+  border: 8px solid var(--color-monitor-bezel);
+  box-shadow:
+    inset 0 0 30px rgba(0,0,0,0.8),
+    0 0 0 4px var(--color-border),
+    0 0 60px rgba(0,0,0,0.9);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 6px;
+
+  // Subtle bevel
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.06);
+    pointer-events: none;
+    z-index: 10;
+  }
+}
+
+// ── Screen ───────────────────────────────────────────────────
+.monitor__screen {
+  flex: 1;
+  background: var(--color-bg-screen);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+
+  // CRT screen glow
+  box-shadow: inset 0 0 80px rgba(0,0,0,0.6), inset 0 0 20px var(--color-glow);
+
+  // Slight screen curvature illusion
+  border-radius: 4px;
+
+  &:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: -3px;
+  }
+}
+
+// ── Screensaver canvas ───────────────────────────────────────
+.screensaver-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+// ── Certificate on landing ───────────────────────────────────
+.screen__certificate {
+  position: relative;
+  z-index: 1;
+}
+
+.certificate {
+  background: linear-gradient(135deg, #fdf8e8 0%, #f5e8c8 100%);
+  border: 3px double var(--color-accent);
+  border-radius: 6px;
+  padding: 2.5rem 3rem;
+  text-align: center;
+  box-shadow:
+    0 4px 24px rgba(0,0,0,0.6),
+    0 0 0 6px rgba(232,160,64,0.15),
+    inset 0 0 30px rgba(255,240,200,0.3);
+  color: #2a1a08;
+  max-width: 460px;
+  position: relative;
+
+  &__seal {
+    font-size: 2rem;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 0.75rem;
+    filter: drop-shadow(0 0 6px var(--color-accent));
+  }
+
+  &__name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+    color: #1a0e04;
+  }
+
+  &__title {
+    font-family: 'Special Elite', cursive;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    color: #4a3020;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+  }
+
+  &__divider {
+    border: none;
+    border-top: 1px solid var(--color-accent);
+    margin: 0.75rem auto;
+    width: 60%;
+    opacity: 0.6;
+  }
+
+  &__tagline {
+    font-family: 'Special Elite', cursive;
+    font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    color: #5a3a18;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  // Small variant (for office wall)
+  &.small {
+    padding: 1rem 1.4rem;
+    max-width: 200px;
+    transform-origin: top center;
+
+    .certificate__seal { font-size: 1.2rem; margin-bottom: 0.4rem; }
+    .certificate__name { font-size: 0.75rem; }
+    .certificate__title { font-size: 0.6rem; }
+    .certificate__tagline { font-size: 0.55rem; }
+  }
+}
+
+// ── Welcome text ─────────────────────────────────────────────
+.screen__welcome {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.welcome-text {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  color: var(--color-text);
+  text-shadow: 0 0 20px var(--color-glow), 0 0 40px var(--color-glow);
+  display: inline-block;
+  transition: opacity 0.4s ease;
+
+  &.is-fading { opacity: 0; }
+}
+
+// ── Click hint ───────────────────────────────────────────────
+.screen__hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  animation: pulse-hint 2.5s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1;   }
+}
+
+// ── Controls ─────────────────────────────────────────────────
+.controls {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 20;
+
+  &__btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+
+    &:hover {
+      background: var(--color-surface-2);
+      box-shadow: 0 0 10px var(--color-glow);
+    }
+  }
+}
+
+// Theme picker dropdown
+.theme-picker {
+  position: absolute;
+  bottom: 3.5rem;
+  right: 0.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.25rem;
+  z-index: 30;
+  box-shadow: 0 0 16px rgba(0,0,0,0.6);
+
+  &.is-open { display: flex; }
+
+  button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    text-align: left;
+    color: var(--color-text);
+
+    &:hover { background: var(--color-surface-2); }
+  }
+}
