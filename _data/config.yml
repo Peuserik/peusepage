@@ -23,9 +23,12 @@ cv_summary: >
 
 pinboard:
   currently_working_on:
-    - "Home automation dashboard v2"
-    - "Cloud migration planning"
-    - "IT governance framework rollout"
+    - label: "Portfolio Redesign"
+      percent: 75
+    - label: "AI Integration"
+      percent: 40
+    - label: "Open Source Tools"
+      percent: 60
   latest_events:
     - "Attended IT Leadership Summit 2024"
     - "Completed AWS Solutions Architect certification"
@@ -34,24 +37,34 @@ pinboard:
 hobbies:
   - icon: "🎮"
     label_en: "Gaming"
-    label_de: "Spielen"
+    label_de: "Gaming"
     description_en: "PC & console games, strategy and RPGs."
     description_de: "PC- und Konsolenspiele, Strategie und RPGs."
-  - icon: "⚡"
-    label_en: "Electronic Engineering"
-    label_de: "Elektronik"
-    description_en: "Tinkering with microcontrollers, sensors and circuits."
-    description_de: "Basteln mit Mikrocontrollern, Sensoren und Schaltkreisen."
   - icon: "🏠"
     label_en: "Home Automation"
     label_de: "Heimautomatisierung"
     description_en: "Building smart home setups with Home Assistant and custom integrations."
     description_de: "Smart-Home-Systeme mit Home Assistant und eigenen Integrationen."
-  - icon: "📚"
-    label_en: "Reading"
-    label_de: "Lesen"
-    description_en: "Tech literature, science fiction and management books."
-    description_de: "Technikbücher, Science-Fiction und Management-Literatur."
+  - icon: "⚡"
+    label_en: "Electronics"
+    label_de: "Elektronik"
+    description_en: "Tinkering with microcontrollers, sensors and circuits."
+    description_de: "Basteln mit Mikrocontrollern, Sensoren und Schaltkreisen."
+  - icon: "✈️"
+    label_en: "Travel"
+    label_de: "Reisen"
+    description_en: "Exploring new places, cultures and tech scenes."
+    description_de: "Neue Orte, Kulturen und Tech-Szenen erkunden."
+  - icon: "📷"
+    label_en: "Photography"
+    label_de: "Fotografie"
+    description_en: "Landscape and street photography with mirrorless cameras."
+    description_de: "Landschafts- und Streetfotografie mit spiegellosen Kameras."
+  - icon: "🎵"
+    label_en: "Music & Tech"
+    label_de: "Musik & Technik"
+    description_en: "Electronic music production, synthesizers and audio gear."
+    description_de: "Elektronische Musikproduktion, Synthesizer und Audiogeräte."
 
 themes:
   default: "warm"   # options: warm | cool | mono

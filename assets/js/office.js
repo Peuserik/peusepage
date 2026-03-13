@@ -4,6 +4,14 @@
 (function () {
   'use strict';
 
+  // ── Theme-aware matrix color ──────────────────────────────────
+  function getMatrixColor() {
+    const theme = (typeof Settings !== 'undefined') ? Settings.getTheme() : 'warm';
+    if (theme === 'cool') return '#40a0e8';
+    if (theme === 'mono') return '#00ff41';
+    return '#e8a040'; // warm = amber
+  }
+
   // ── Matrix rain animation ─────────────────────────────────────
   const matCanvas = document.getElementById('matrix-canvas');
   if (matCanvas) {
@@ -23,7 +31,7 @@
     function drawMatrix() {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, matCanvas.width, matCanvas.height);
-      ctx.fillStyle = '#00ff41';
+      ctx.fillStyle = getMatrixColor();
       ctx.font = `${FONT_SIZE}px monospace`;
 
       drops.forEach((y, i) => {
@@ -35,7 +43,7 @@
     }
 
     resizeMat();
-    const matInterval = setInterval(drawMatrix, 50);
+    setInterval(drawMatrix, 50);
     window.addEventListener('resize', resizeMat);
   }
 
@@ -44,9 +52,9 @@
     const el = document.getElementById(id);
     if (!el) return;
     el.classList.add('is-open');
-    el.querySelector('[data-close]')?.focus();
+    const focusable = el.querySelector('[data-close], button, a');
+    focusable?.focus();
 
-    // Show/hide monitor desktop state when CV is opened
     const monitorDesktop = document.getElementById('monitor-desktop');
     if (monitorDesktop) {
       monitorDesktop.setAttribute('aria-hidden', id === 'popup-cv' ? 'false' : 'true');
@@ -58,7 +66,6 @@
     if (!el) return;
     el.classList.remove('is-open');
 
-    // Restore matrix on CV close
     if (id === 'popup-cv') {
       const monitorDesktop = document.getElementById('monitor-desktop');
       monitorDesktop?.setAttribute('aria-hidden', 'true');
@@ -77,12 +84,18 @@
     });
   });
 
-  // Desktop app icons open sub-popups
+  // Desktop app tiles open sub-popups
   document.querySelectorAll('[data-open]').forEach(btn => {
     btn.addEventListener('click', () => {
       const target = btn.getAttribute('data-open');
-      closePopup('popup-desktop');
-      setTimeout(() => openPopup(target), 200);
+      // If inside desktop popup, close it first
+      const parentPopup = btn.closest('.popup-overlay');
+      if (parentPopup) {
+        closePopup(parentPopup.id);
+        setTimeout(() => openPopup(target), 200);
+      } else {
+        openPopup(target);
+      }
     });
   });
 
@@ -108,6 +121,30 @@
   bindClickable('clickable-window',      () => openPopup('popup-hobbies'));
   bindClickable('clickable-pinboard',    () => openPopup('popup-pinboard'));
 
+  // ── Retro clock ───────────────────────────────────────────────
+  function updateRetroClock() {
+    const el = document.getElementById('retro-clock');
+    if (!el) return;
+    const now = new Date();
+    el.textContent = now.getHours().toString().padStart(2, '0') + ':' +
+                     now.getMinutes().toString().padStart(2, '0');
+  }
+  setInterval(updateRetroClock, 1000);
+  updateRetroClock();
+
+  // ── Wall clock hands ──────────────────────────────────────────
+  function updateClockHands() {
+    const now = new Date();
+    const hours   = (now.getHours() % 12) + now.getMinutes() / 60;
+    const minutes = now.getMinutes();
+    const hourHand   = document.querySelector('.clock__hand--hour');
+    const minuteHand = document.querySelector('.clock__hand--minute');
+    if (hourHand)   hourHand.style.transform   = `rotate(${hours * 30}deg)`;
+    if (minuteHand) minuteHand.style.transform = `rotate(${minutes * 6}deg)`;
+  }
+  setInterval(updateClockHands, 1000);
+  updateClockHands();
+
   // ── Hobby i18n ────────────────────────────────────────────────
   function updateHobbiesLang(lang) {
     document.querySelectorAll('.hobby-item__label').forEach(el => {
@@ -124,10 +161,11 @@
     if (e.detail.lang) updateHobbiesLang(e.detail.lang);
   });
 
-  // Apply on load
-  updateHobbiesLang(Settings.getLang());
+  if (typeof Settings !== 'undefined') {
+    updateHobbiesLang(Settings.getLang());
+  }
 
-  // ── Controls (also available on main page) ────────────────────
+  // ── Controls ──────────────────────────────────────────────────
   document.getElementById('btn-mode')?.addEventListener('click', () => {
     Settings.toggleMode();
     const btn = document.getElementById('btn-mode');

@@ -1,36 +1,34 @@
-<div class="popup-overlay" id="popup-cv" role="dialog" aria-modal="true" aria-label="CV">
-  <div class="popup-window popup-window--cv">
-    <button class="popup-close" data-close="popup-cv" aria-label="Close">✕</button>
-    <div class="cv-popup">
-      <div class="cv-popup__header">
-        {% include certificate.html size="small" %}
+<div class="popup-overlay retro-window" id="popup-cv" role="dialog" aria-modal="true">
+  <div class="retro-win__outer">
+    <div class="retro-win__titlebar">
+      <span class="retro-win__icon">🖥️</span>
+      <span class="retro-win__title">{{ site.data.config.person.name }} — {{ site.data.config.person.title }}</span>
+      <div class="retro-win__controls">
+        <button class="retro-btn retro-btn--min" data-close="popup-cv">_</button>
+        <button class="retro-btn retro-btn--max">□</button>
+        <button class="retro-btn retro-btn--close" data-close="popup-cv">✕</button>
       </div>
-      <p class="cv-popup__summary">{{ site.data.config.cv_summary }}</p>
-      <div class="cv-popup__links">
-        <a class="cv-link cv-link--linkedin" href="{{ site.data.config.social.linkedin }}" target="_blank" rel="noopener">
-          <span class="cv-link__icon">in</span>
-          <span data-i18n="open_linkedin">Open LinkedIn</span>
-        </a>
-        <a class="cv-link cv-link--xing" href="{{ site.data.config.social.xing }}" target="_blank" rel="noopener">
-          <span class="cv-link__icon">X</span>
-          <span data-i18n="open_xing">Open Xing</span>
-        </a>
-        <a class="cv-link cv-link--github" href="{{ site.data.config.social.github }}" target="_blank" rel="noopener">
-          <span class="cv-link__icon">⌥</span>
-          GitHub: {{ site.data.config.social.github | split: '/' | last }}
-        </a>
-        <a class="cv-link cv-link--x" href="https://x.com/{{ site.data.config.social.x_handle | remove: '@' }}" target="_blank" rel="noopener">
-          <span class="cv-link__icon">𝕏</span>
-          {{ site.data.config.social.x_handle }}
-        </a>
-        <a class="cv-link cv-link--threads" href="https://threads.net/{{ site.data.config.social.threads_handle | remove: '@' }}" target="_blank" rel="noopener">
-          <span class="cv-link__icon">@</span>
-          {{ site.data.config.social.threads_handle }}
-        </a>
-        <a class="cv-link cv-link--email" href="mailto:{{ site.data.config.social.email }}">
-          <span class="cv-link__icon">✉</span>
-          <span data-i18n="contact_email">Send Email</span>
-        </a>
+    </div>
+    <div class="retro-win__body">
+      <div class="cv-terminal">
+        <div class="cv-terminal__name">{{ site.data.config.person.name }} -- {{ site.data.config.person.title }}</div>
+        <div style="color:#6a9a30;margin-bottom:8px;">{{ site.data.config.person.tagline }}</div>
+        <ul class="cv-terminal__bullets">
+          {% assign summary_lines = site.data.config.cv_summary | split: ". " %}
+          {% for line in summary_lines %}
+            {% if line != "" %}<li>{{ line | strip }}.</li>{% endif %}
+          {% endfor %}
+        </ul>
+        <div class="cv-terminal__connect">&gt; Connect with me:</div>
+        <div class="cv-terminal__links">
+          <a class="cv-link-btn" href="{{ site.data.config.social.linkedin }}" target="_blank" rel="noopener">🔗 LinkedIn</a>
+          <a class="cv-link-btn" href="https://x.com/{{ site.data.config.social.x_handle | remove: '@' }}" target="_blank" rel="noopener">𝕏 X/Twitter</a>
+          <a class="cv-link-btn" href="https://threads.net/{{ site.data.config.social.threads_handle | remove: '@' }}" target="_blank" rel="noopener">@ Threads</a>
+          <a class="cv-link-btn" href="{{ site.data.config.social.github }}" target="_blank" rel="noopener">🐙 GitHub</a>
+          <a class="cv-link-btn" href="{{ site.data.config.social.xing }}" target="_blank" rel="noopener">X XING</a>
+          <a class="cv-link-btn" href="mailto:{{ site.data.config.social.email }}">✉ Email</a>
+        </div>
+        <span class="cv-terminal__cursor"></span>
       </div>
     </div>
   </div>

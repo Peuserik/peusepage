@@ -1,21 +1,27 @@
-<div class="popup-overlay" id="popup-hobbies" role="dialog" aria-modal="true" aria-label="Hobbies">
-  <div class="popup-window popup-window--hobbies">
-    <button class="popup-close" data-close="popup-hobbies" aria-label="Close">✕</button>
-    <h2 class="popup-title" data-i18n="popup_hobbies">Hobbies</h2>
-    <ul class="hobbies-list">
-      {% for hobby in site.data.config.hobbies %}
-      <li class="hobby-item">
-        <span class="hobby-item__icon" aria-hidden="true">{{ hobby.icon }}</span>
-        <div class="hobby-item__body">
-          <strong class="hobby-item__label"
-            data-label-en="{{ hobby.label_en }}"
-            data-label-de="{{ hobby.label_de }}">{{ hobby.label_en }}</strong>
-          <p class="hobby-item__desc"
-            data-desc-en="{{ hobby.description_en }}"
-            data-desc-de="{{ hobby.description_de }}">{{ hobby.description_en }}</p>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
+<div class="popup-overlay retro-window" id="popup-hobbies" role="dialog" aria-modal="true">
+  <div class="retro-win__outer">
+    <div class="retro-win__titlebar">
+      <span class="retro-win__icon">🎯</span>
+      <span class="retro-win__title">HOBBIES &amp; PERSONAL</span>
+      <div class="retro-win__controls">
+        <button class="retro-btn retro-btn--min" data-close="popup-hobbies">_</button>
+        <button class="retro-btn retro-btn--max">□</button>
+        <button class="retro-btn retro-btn--close" data-close="popup-hobbies">✕</button>
+      </div>
+    </div>
+    <div class="retro-win__body">
+      <div class="hobbies-grid">
+        {% assign hobby_classes = "gaming,homeauto,electronics,travel,photo,music" | split: "," %}
+        {% for hobby in site.data.config.hobbies %}
+          {% assign css_class = hobby_classes[forloop.index0] %}
+          <div class="hobby-tile hobby-tile--{{ css_class }}">
+            <span class="hobby-tile__icon">{{ hobby.icon }}</span>
+            <span class="hobby-tile__label"
+              data-label-en="{{ hobby.label_en }}"
+              data-label-de="{{ hobby.label_de }}">{{ hobby.label_en }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 </div>

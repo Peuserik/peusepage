@@ -1,24 +1,39 @@
-<div class="popup-overlay" id="popup-pinboard" role="dialog" aria-modal="true" aria-label="Updates">
-  <div class="popup-window popup-window--pinboard">
-    <button class="popup-close" data-close="popup-pinboard" aria-label="Close">✕</button>
-    <h2 class="popup-title" data-i18n="popup_pinboard">Updates</h2>
-    <div class="pinboard-sections">
-      <section class="pinboard-section">
-        <h3 data-i18n="currently_working_on">Currently working on</h3>
-        <ul>
+<div class="popup-overlay retro-window" id="popup-pinboard" role="dialog" aria-modal="true">
+  <div class="retro-win__outer">
+    <div class="retro-win__titlebar">
+      <span class="retro-win__icon">📌</span>
+      <span class="retro-win__title">LATEST EVENTS &amp; CURRENTLY WORKING ON</span>
+      <div class="retro-win__controls">
+        <button class="retro-btn retro-btn--min" data-close="popup-pinboard">_</button>
+        <button class="retro-btn retro-btn--max">□</button>
+        <button class="retro-btn retro-btn--close" data-close="popup-pinboard">✕</button>
+      </div>
+    </div>
+    <div class="retro-win__body">
+      <div class="pinboard-popup">
+        <div class="pinboard-col">
+          <div class="pinboard-col__title">LATEST EVENTS</div>
+          <ul class="pinboard-col__list">
+            {% for item in site.data.config.pinboard.latest_events %}
+            <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="pinboard-col">
+          <div class="pinboard-col__title">CURRENTLY WORKING ON</div>
           {% for item in site.data.config.pinboard.currently_working_on %}
-          <li>{{ item }}</li>
+          <div class="progress-item">
+            <div class="progress-item__label">
+              <span>{{ item.label }}</span>
+              <span>{{ item.percent }}%</span>
+            </div>
+            <div class="progress-item__bar">
+              <div class="progress-item__bar-fill" style="width: {{ item.percent }}%"></div>
+            </div>
+          </div>
           {% endfor %}
-        </ul>
-      </section>
-      <section class="pinboard-section">
-        <h3 data-i18n="latest_events">Latest events</h3>
-        <ul>
-          {% for item in site.data.config.pinboard.latest_events %}
-          <li>{{ item }}</li>
-          {% endfor %}
-        </ul>
-      </section>
+        </div>
+      </div>
     </div>
   </div>
 </div>

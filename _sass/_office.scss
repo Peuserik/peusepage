@@ -1,573 +1,871 @@
 // ============================================================
-// OFFICE SCENE — CSS art room
+// OFFICE SCENE — CSS art room (2.5D perspective)
 // ============================================================
 
-// ── Page shell ───────────────────────────────────────────────
 .page-office {
   overflow: hidden;
 }
 
-.office {
-  position: fixed;
+// ── Office room container ─────────────────────────────────────
+.office-room {
+  position: absolute;
   inset: 0;
-  background: var(--color-bg-room);
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
+  background: #3a2810;
 }
 
-// ── Room (background layer) ──────────────────────────────────
-.room {
+// ── Ambient glow overlay ──────────────────────────────────────
+.room-glow {
   position: absolute;
-  inset: 0 0 35% 0;
-  display: flex;
-  align-items: stretch;
+  inset: 0;
+  background: radial-gradient(ellipse 40% 60% at 75% 75%, rgba(255,160,40,0.25) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 5;
 }
 
-// ── Walls ────────────────────────────────────────────────────
-.wall {
-  &--left  { width: 30%; background: linear-gradient(to right, #2a1a0c, var(--color-bg-room)); position: relative; }
-  &--back  { flex: 1; background: var(--color-bg-room); position: relative; display: flex; align-items: flex-start; justify-content: center; padding-top: 1.5rem; }
-  &--right { width: 20%; background: linear-gradient(to left, #2a1a0c, var(--color-bg-room)); position: relative; }
-}
-
-// ── Window ───────────────────────────────────────────────────
-.window {
+// ── Walls ─────────────────────────────────────────────────────
+.room-wall {
   position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  cursor: pointer;
 
-  &:focus-visible { outline: 3px solid var(--color-accent); border-radius: 4px; }
-
-  &__frame {
-    border: 6px solid var(--color-border);
-    background: #87ceeb;
-    border-radius: 4px 4px 0 0;
-    overflow: hidden;
-    aspect-ratio: 3/4;
-    position: relative;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.3), 0 0 0 2px var(--color-desk);
-
-    // Window panes (cross)
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to right, transparent calc(50% - 2px), var(--color-border) calc(50% - 2px), var(--color-border) calc(50% + 2px), transparent calc(50% + 2px)),
-        linear-gradient(to bottom, transparent calc(50% - 2px), var(--color-border) calc(50% - 2px), var(--color-border) calc(50% + 2px), transparent calc(50% + 2px));
-      z-index: 2;
-    }
-  }
-
-  &__sky {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, #87ceeb 0%, #c8e8f8 60%, #e8f8d0 100%);
-  }
-
-  &__sill {
-    height: 10px;
-    background: var(--color-border);
-    border-radius: 0 0 3px 3px;
-  }
-}
-
-// ── Landscape inside window ───────────────────────────────────
-.landscape {
-  &__sun {
-    position: absolute;
-    top: 12%;
-    right: 20%;
-    width: 20px;
-    height: 20px;
-    background: #ffd700;
-    border-radius: 50%;
-    box-shadow: 0 0 12px #ffd700;
-  }
-
-  &__grass {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30%;
-    background: linear-gradient(to top, #4a8a30 0%, #6ab840 100%);
-    border-radius: 0 0 2px 2px;
-  }
-
-  &__tree {
-    position: absolute;
-    bottom: 28%;
-    &::before { // trunk
+  &--back {
+    top: 0;
+    left: 18%;
+    right: 18%;
+    height: 62%;
+    background: linear-gradient(to bottom, #6b5038 0%, #5a4028 40%, #3d2a18 100%);
+    // Wood wainscoting on lower back wall
+    &::after {
       content: '';
       position: absolute;
       bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 16px;
-      background: #5c3a1e;
-    }
-    &::after { // canopy
-      content: '';
-      position: absolute;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 12px solid transparent;
-      border-right: 12px solid transparent;
-      border-bottom: 22px solid #3a8020;
-    }
-    &--1 { left: 15%; }
-    &--2 { left: 55%; bottom: 30%; }
-  }
-
-  &__car {
-    position: absolute;
-    bottom: 30%;
-    left: 20%;
-    width: 28px;
-    height: 14px;
-    background: #cc3333;
-    border-radius: 4px 6px 2px 2px;
-    &::before { // wheels
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 2px;
-      width: 8px;
-      height: 8px;
-      background: #111;
-      border-radius: 50%;
-      box-shadow: 14px 0 0 #111;
+      left: 0;
+      right: 0;
+      height: 35%;
+      background: repeating-linear-gradient(
+        90deg,
+        #2a1808 0px, #3d2418 20px, #2a1808 22px
+      );
     }
   }
 
-  &__ball {
-    position: absolute;
-    bottom: 31%;
-    right: 18%;
-    width: 10px;
-    height: 10px;
-    background: radial-gradient(circle at 35% 35%, #ff6060, #cc1010);
-    border-radius: 50%;
+  &--left {
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 62%;
+    background: linear-gradient(to right, #2a1808 0%, #4a3018 60%, #3a2810 100%);
+    // Wood wainscoting
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 35%;
+      background: repeating-linear-gradient(
+        90deg,
+        #1e1206 0px, #2e1a0c 20px, #1e1206 22px
+      );
+    }
+  }
+
+  &--right {
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 62%;
+    background: linear-gradient(to left, #2a1808 0%, #4a3018 60%, #3a2810 100%);
+    // Wood wainscoting
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 35%;
+      background: repeating-linear-gradient(
+        90deg,
+        #1e1206 0px, #2e1a0c 20px, #1e1206 22px
+      );
+    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8%;
+    padding-top: 5%;
   }
 }
 
-// ── Certificate on wall ───────────────────────────────────────
-.certificate-wall {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+// ── Floor ─────────────────────────────────────────────────────
+.room-floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: repeating-linear-gradient(
+    90deg,
+    #3a2510 0px, #4a3020 40px, #3a2510 42px
+  );
+  // Perspective: lighter at back edge
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(to bottom, rgba(80,50,20,0.6) 0%, transparent 100%);
+  }
+}
+
+// ── Window (left wall) ────────────────────────────────────────
+.window-wrap {
+  position: absolute;
+  top: 8%;
+  left: 10%;
+  width: 75%;
+  height: 55%;
   cursor: pointer;
+  &:focus-visible { outline: 3px solid #e8a040; outline-offset: 4px; }
+}
 
-  &:focus-visible { outline: 3px solid var(--color-accent); border-radius: 4px; }
+.window-frame {
+  width: 100%;
+  height: 90%;
+  border: 6px solid #7a5428;
+  background: #7a5428;
+  position: relative;
+  box-shadow: inset 0 0 0 3px #5a3a18, 2px 2px 8px rgba(0,0,0,0.6);
+}
 
-  &__thread {
-    width: 120px;
-    height: 12px;
-    border-top: none;
-    border-left: 1px solid var(--color-accent);
-    border-right: 1px solid var(--color-accent);
-    border-bottom: none;
-    // Simulate a hanging thread arc with a pseudo element
-    position: relative;
+.window-panes {
+  position: absolute;
+  inset: 4px;
+  overflow: hidden;
+  // Cross-bar dividers
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 4px;
+    background: #7a5428;
+    z-index: 2;
+    transform: translateX(-50%);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 45%;
+    height: 4px;
+    background: #7a5428;
+    z-index: 2;
+  }
+}
+
+.win-sky {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 60%;
+  background: linear-gradient(to bottom, #ff9a3c, #ffb347, #87ceeb);
+  transition: background 0.8s ease;
+}
+
+[data-mode="dark"] .win-sky {
+  background: linear-gradient(to bottom, #0a0a2a, #1a1a4a, #2a2a6a);
+}
+
+.win-landscape {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 45%;
+  background: #3a6a28;
+  overflow: hidden;
+}
+
+.win-tree {
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  &--1 {
+    left: 15%;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 30px solid #2a5a18;
     &::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: -1px;
-      right: -1px;
-      height: 12px;
-      border: 1px solid var(--color-accent);
-      border-top: none;
-      border-radius: 0 0 50% 50%;
+      left: -8px; bottom: -20px;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 22px solid #3a7a28;
     }
   }
-
-  &__frame {
-    border: 6px solid var(--color-border);
-    padding: 4px;
-    background: var(--color-desk);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.6), inset 0 0 6px rgba(0,0,0,0.4);
-    border-radius: 2px;
-    transform: rotate(-1deg);
+  &--2 {
+    left: 55%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 25px solid #1a4a10;
+    &::before {
+      content: '';
+      position: absolute;
+      left: -7px; bottom: -18px;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 20px solid #2a6020;
+    }
   }
 }
 
-// ── Pinboard ──────────────────────────────────────────────────
-.pinboard {
+.win-grass {
   position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 75%;
-  cursor: pointer;
-
-  &:focus-visible { outline: 3px solid var(--color-accent); border-radius: 4px; }
-
-  &__surface {
-    background: #c8a060;
-    border: 4px solid #8a6030;
-    border-radius: 4px;
-    aspect-ratio: 3/4;
-    position: relative;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.5);
-  }
-
-  &__pin {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: radial-gradient(circle at 35% 35%, #ff4444, #aa0000);
-    border-radius: 50%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    &--1 { top: 10%;  left:  50%; transform: translateX(-50%); }
-    &--2 { top: 52%;  left:  50%; transform: translateX(-50%); }
-  }
-
-  &__note {
-    position: absolute;
-    background: #f5f0c0;
-    border-radius: 2px;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-    &--1 { top: 12%; left: 10%;  width: 75%; height: 35%; transform: rotate(-1.5deg); }
-    &--2 { top: 54%; left: 8%;   width: 38%; height: 30%; transform: rotate(1deg); }
-    &--3 { top: 56%; left: 52%;  width: 36%; height: 28%; transform: rotate(-0.5deg); background: #c8f0c0; }
-  }
+  bottom: 0; left: 0; right: 0;
+  height: 30%;
+  background: linear-gradient(to bottom, #5a8a38, #3a6a18);
 }
 
-// ── Desk area (foreground) ────────────────────────────────────
-.desk-area {
+.win-car {
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70%;
-  height: 40%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.desk {
-  width: 100%;
-  height: 65%;
-  background: linear-gradient(to bottom, var(--color-desk) 0%, var(--color-desk-shadow) 100%);
-  border-radius: 6px 6px 0 0;
-  border-top: 4px solid #8a5a2a;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 2%;
-  padding: 0 4% 4%;
-
-  // Desk legs
-  &::before, &::after {
+  bottom: 25%;
+  right: 8%;
+  width: 25%;
+  height: 18%;
+  background: #c04020;
+  border-radius: 2px 4px 2px 2px;
+  &::before {
     content: '';
     position: absolute;
-    bottom: -30px;
-    width: 6%;
-    height: 30px;
-    background: var(--color-desk-shadow);
+    top: -40%;
+    left: 20%;
+    width: 55%;
+    height: 80%;
+    background: #a03018;
+    border-radius: 3px 3px 0 0;
   }
-  &::before { left: 8%; }
-  &::after  { right: 8%; }
-}
-
-// ── Lamp ─────────────────────────────────────────────────────
-.lamp {
-  position: absolute;
-  left: 6%;
-  bottom: 60%;
-  transform-origin: bottom center;
-
-  &__base {
-    width: 30px;
-    height: 6px;
-    background: #3a2a1a;
-    border-radius: 3px;
-    margin: 0 auto;
-  }
-
-  &__arm {
-    width: 4px;
-    height: 40px;
-    background: #4a3a2a;
-    margin: 0 auto;
-  }
-
-  &__head {
-    width: 24px;
-    height: 12px;
-    background: #5a4a2a;
-    border-radius: 12px 12px 0 0;
-    margin: 0 auto;
-    position: relative;
-    transform: rotate(-30deg);
-  }
-
-  &__glow {
+  &::after {
+    content: '';
     position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 20px;
-    background: radial-gradient(ellipse, rgba(255,240,160,0.4) 0%, transparent 70%);
-    pointer-events: none;
-  }
-}
-
-// ── Coffee cup ───────────────────────────────────────────────
-.coffee {
-  position: absolute;
-  right: 8%;
-  bottom: 55%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  &__steam {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 2px;
-    span {
-      display: block;
-      width: 3px;
-      height: 10px;
-      background: rgba(255,255,255,0.4);
-      border-radius: 2px;
-      animation: steam 2s ease-in-out infinite;
-      &:nth-child(2) { animation-delay: 0.4s; }
-      &:nth-child(3) { animation-delay: 0.8s; }
-    }
-  }
-
-  &__cup {
-    width: 24px;
-    height: 20px;
-    background: #e8e0d0;
-    border-radius: 0 0 8px 8px;
-    border: 1.5px solid #c0b090;
-    position: relative;
-    overflow: hidden;
-  }
-
-  &__liquid {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60%;
-    background: #5a2e10;
-    border-radius: 0 0 6px 6px;
-  }
-
-  &__saucer {
-    width: 32px;
-    height: 5px;
-    background: #e8e0d0;
+    bottom: -25%;
+    left: 10%;
+    width: 20%;
+    height: 40%;
+    background: #1a1a1a;
     border-radius: 50%;
-    border: 1px solid #c0b090;
-    margin-top: 1px;
+    box-shadow: 40% 0 0 0 #1a1a1a;
   }
 }
 
-@keyframes steam {
-  0%, 100% { transform: translateY(0) scaleX(1); opacity: 0.4; }
-  50%       { transform: translateY(-6px) scaleX(0.6); opacity: 0.1; }
+.window-sill {
+  width: 100%;
+  height: 10%;
+  background: linear-gradient(to bottom, #9a6838, #6a4820);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
 }
 
-// ── Desk monitor ─────────────────────────────────────────────
-.desk-monitor {
-  position: relative;
+// ── Certificate on back wall ───────────────────────────────────
+.wall-cert {
+  position: absolute;
+  top: 5%;
+  left: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-
-  &:focus-visible { outline: 3px solid var(--color-accent); border-radius: 4px; }
-
-  &__body {
-    width: clamp(100px, 18vw, 200px);
-    background: #1a1208;
-    border: 3px solid #2a1e10;
-    border-radius: 4px;
-    padding: 4px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.7), 0 0 0 1px #0a0804;
-  }
-
-  &__bezel {
-    background: #000;
-    aspect-ratio: 4/3;
-    border-radius: 2px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  &__stand {
-    width: 20px;
-    height: 20px;
-    background: #1a1208;
-    clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
-    margin-top: -2px;
-  }
-
-  &__brand {
-    font-size: 0.5rem;
-    color: #3a2a10;
-    margin-top: 2px;
-  }
-
-  &__desktop {
-    position: absolute;
-    inset: 0;
-    background: #1a2a4a;
-    display: none;
-    flex-direction: column;
-    padding: 4px;
-
-    &[aria-hidden="false"] { display: flex; }
-  }
+  z-index: 2;
+  &:focus-visible { outline: 3px solid #e8a040; outline-offset: 4px; }
 }
 
-.matrix-canvas {
+.wall-cert__thread {
+  width: 2px;
+  height: 24px;
+  background: linear-gradient(to bottom, transparent, #8a6a3a);
+  margin-bottom: -2px;
+}
+
+.wall-cert__frame {
+  border: 4px solid #c8a850;
+  box-shadow: 0 0 0 1px #8a7030, 2px 4px 12px rgba(0,0,0,0.6);
+  background: #fdf8e8;
+}
+
+// ── Wall clock ────────────────────────────────────────────────
+.wall-clock {
+  position: absolute;
+  top: 6%;
+  left: 55%;
+  width: clamp(40px, 5vw, 70px);
+  height: clamp(40px, 5vw, 70px);
+  z-index: 2;
+}
+
+.clock__face {
   width: 100%;
   height: 100%;
-  display: block;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f0e8d0 0%, #d4c8a8 100%);
+  border: 3px solid #8a6830;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5), inset 0 1px 3px rgba(255,255,255,0.3);
+  position: relative;
 }
 
-.desktop-bar {
-  height: 8px;
-  background: #2a4080;
-  margin-bottom: 4px;
-  border-radius: 1px;
+.clock__hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  background: #2a1a08;
+  border-radius: 2px;
+
+  &--hour {
+    width: 3px;
+    height: 28%;
+    margin-left: -1.5px;
+    transform: rotate(0deg);
+  }
+  &--minute {
+    width: 2px;
+    height: 38%;
+    margin-left: -1px;
+    transform: rotate(0deg);
+  }
 }
 
-.desktop-file {
+.clock__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #c8a040;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+// ── Bookshelf (right wall) ─────────────────────────────────────
+.bookshelf {
+  position: relative;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 8px;
-
-  .file-icon { font-size: 1.2rem; }
-
-  .file-lines {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-
-    div {
-      height: 2px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 1px;
-    }
-  }
+  margin-top: 5%;
+  z-index: 2;
 }
 
-// ── Mouse + mousepad ─────────────────────────────────────────
-.mousepad {
-  width: clamp(60px, 10vw, 120px);
-  height: clamp(40px, 6vw, 80px);
-  background: #1a1a1a;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.shelf-plank {
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(to bottom, #9a6838, #6a4820);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
   margin-bottom: 4px;
 }
 
-.mouse {
+.book {
+  position: absolute;
+  bottom: 6px;
+  height: clamp(18px, 2.5vw, 32px);
+  width: clamp(6px, 1vw, 12px);
+  border-radius: 1px;
+  &--1 { left: 5%;  background: #c04030; }
+  &--2 { left: 20%; background: #3060a0; width: clamp(8px, 1.2vw, 14px); }
+  &--3 { left: 37%; background: #308040; }
+  &--4 { left: 52%; background: #a07030; width: clamp(5px, 0.9vw, 11px); }
+}
+
+.shelf-car {
+  position: absolute;
+  bottom: 6px;
+  right: 8%;
+  width: clamp(14px, 2vw, 22px);
+  height: clamp(8px, 1.2vw, 14px);
+  background: #c8d040;
+  border-radius: 1px 2px 1px 1px;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: 15%;
+    width: 55%;
+    height: 75%;
+    background: #b0b830;
+    border-radius: 2px 2px 0 0;
+  }
+}
+
+// ── Corkboard (right wall) ─────────────────────────────────────
+.corkboard {
   position: relative;
-
-  &__body {
-    width: 20px;
-    height: 28px;
-    background: #e0d8d0;
-    border-radius: 10px 10px 8px 8px;
-    border: 1px solid #b0a898;
-    position: relative;
-    overflow: hidden;
-  }
-
-  &__btn {
+  width: 80%;
+  aspect-ratio: 4/5;
+  background: #c8903a;
+  border: 4px solid #6a3a10;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 2;
+  // Cork grain
+  &::before {
+    content: '';
     position: absolute;
-    top: 0;
-    height: 45%;
-    &--left  { left: 0;   width: 50%; border-right: 1px solid #b0a898; }
-    &--right { right: 0;  width: 50%; }
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent 0px, transparent 3px,
+      rgba(0,0,0,0.05) 3px, rgba(0,0,0,0.05) 4px
+    );
   }
+  &:focus-visible { outline: 3px solid #e8a040; outline-offset: 4px; }
+}
 
-  &__wheel {
+.cork-note {
+  position: absolute;
+  width: 55%;
+  height: 28%;
+  background: #f8f4e0;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  &--1 { top: 8%;  left: 8%;  transform: rotate(-3deg); }
+  &--2 { top: 40%; left: 30%; transform: rotate(2deg); }
+  &--3 { top: 62%; left: 5%;  transform: rotate(-1deg); }
+}
+
+.cork-pin {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c03020;
+  z-index: 2;
+  &--1 { top: 10%;  left: 33%; }
+  &--2 { top: 42%; left: 56%; }
+  &--3 { top: 64%; left: 29%; }
+}
+
+// ── Desk scene ─────────────────────────────────────────────────
+.desk-scene {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  z-index: 3;
+}
+
+// ── Desk ──────────────────────────────────────────────────────
+.desk {
+  position: absolute;
+  bottom: 22%;
+  left: 8%;
+  right: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+.desk__surface {
+  height: clamp(40px, 6vw, 80px);
+  background: linear-gradient(to bottom, #5a3820 0%, #4a2e18 100%);
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 2%;
+  gap: 2%;
+}
+
+.desk__front {
+  height: clamp(30px, 4.5vw, 60px);
+  background: #3a2010;
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px;
+}
+
+.desk__side {
+  position: absolute;
+  right: -3%;
+  top: 0;
+  bottom: 0;
+  width: 3%;
+  background: #2a1808;
+  transform: skewY(-3deg);
+}
+
+.desk-drawer {
+  flex: 1;
+  border: 1px solid #4a2e18;
+  background: #321a0a;
+  position: relative;
+  &::after {
+    content: '';
     position: absolute;
-    top: 25%;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
+    transform: translate(-50%, -50%);
+    width: 8px;
     height: 8px;
+    border-radius: 50%;
+    background: #c8a840;
+    box-shadow: 0 0 3px rgba(200,168,64,0.5);
+  }
+}
+
+// ── Trash can ─────────────────────────────────────────────────
+.trash-can {
+  position: absolute;
+  bottom: 22%;
+  left: 1%;
+  z-index: 2;
+}
+
+.trash-can__body {
+  width: clamp(16px, 2.5vw, 30px);
+  height: clamp(20px, 3vw, 38px);
+  background: linear-gradient(to right, #606060, #909090, #606060);
+  border-radius: 0 0 4px 4px;
+  border-top: 2px solid #aaa;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -2px;
+    right: -2px;
+    height: 4px;
     background: #888;
     border-radius: 2px;
   }
-
-  &__cable {
-    position: absolute;
-    top: -16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 16px;
-    background: #555;
-    border-radius: 1px;
-  }
 }
 
-// ── Chair ────────────────────────────────────────────────────
-.chair {
-  width: 60%;
-  height: 35%;
+// ── Coffee mug on desk ────────────────────────────────────────
+.desk-coffee {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
 
-  &__back {
-    width: 55%;
-    height: 55%;
-    background: #1a1a1a;
-    border-radius: 6px 6px 0 0;
-    border: 2px solid #333;
-    margin-bottom: -4px;
-    background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+.coffee-steam {
+  display: flex;
+  gap: 3px;
+  height: clamp(8px, 1.5vw, 16px);
+  align-items: flex-end;
+  span {
+    width: 2px;
+    height: 100%;
+    background: rgba(255,255,255,0.6);
+    border-radius: 2px;
+    animation: steam 2s ease-in-out infinite;
+    &:nth-child(2) { animation-delay: 0.4s; }
   }
+}
 
-  &__seat {
-    width: 65%;
-    height: 18%;
-    background: #222;
-    border-radius: 4px;
-    border: 2px solid #333;
+.coffee-cup {
+  width: clamp(14px, 2vw, 22px);
+  height: clamp(14px, 2.2vw, 24px);
+  background: #f8f8f8;
+  border-radius: 0 0 4px 4px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 30%;
+    width: 5px;
+    height: 40%;
+    border: 2px solid #ddd;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
   }
+}
 
-  &__pole {
-    width: 6px;
+.coffee-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70%;
+  background: #6a3a18;
+}
+
+@keyframes steam {
+  0%, 100% { opacity: 0.4; transform: translateY(0) scaleX(1); }
+  50%       { opacity: 0.8; transform: translateY(-4px) scaleX(1.3); }
+}
+
+// ── CRT Monitor on desk ───────────────────────────────────────
+.crt-monitor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  &:focus-visible { outline: 3px solid #e8a040; outline-offset: 4px; }
+}
+
+.crt-body {
+  background: #d4c9b0;
+  border-radius: 6px 6px 2px 2px;
+  padding: clamp(6px, 1vw, 12px);
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.4);
+  border: 2px solid #b4a990;
+}
+
+.crt-screen {
+  width: clamp(60px, 9vw, 110px);
+  height: clamp(50px, 7vw, 88px);
+  background: #000;
+  border: 2px solid #2a2a1a;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.crt-desktop {
+  position: absolute;
+  inset: 0;
+  background: #005020;
+  z-index: 2;
+  &[aria-hidden="true"] { display: none; }
+}
+
+.desktop-topbar {
+  height: 12%;
+  background: #003010;
+  border-bottom: 1px solid #006030;
+}
+
+.desktop-file {
+  position: absolute;
+  top: 25%;
+  left: 15%;
+  font-size: clamp(8px, 1.2vw, 14px);
+}
+
+.crt-stand {
+  width: clamp(10px, 1.5vw, 18px);
+  height: clamp(6px, 1vw, 12px);
+  background: #b4a990;
+  clip-path: trapezoid;
+  // Simple trapezoid via borders
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: clamp(6px, 1vw, 12px) solid #c4b9a0;
+}
+
+.crt-base {
+  width: clamp(30px, 4.5vw, 56px);
+  height: clamp(4px, 0.7vw, 8px);
+  background: #b4a990;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+// ── Keyboard on desk ──────────────────────────────────────────
+.keyboard {
+  position: relative;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+
+.keyboard__body {
+  background: #d8d0b8;
+  border: 1px solid #b8b098;
+  border-radius: 3px;
+  padding: clamp(2px, 0.4vw, 5px) clamp(3px, 0.6vw, 7px);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  width: clamp(50px, 7.5vw, 90px);
+}
+
+.key-row {
+  height: clamp(3px, 0.5vw, 6px);
+  background: repeating-linear-gradient(
+    90deg,
+    #c0b898 0px, #c0b898 6px,
+    #b0a888 7px, #b0a888 8px
+  );
+  border-radius: 1px;
+}
+
+// ── Desk lamp ─────────────────────────────────────────────────
+.desk-lamp {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+
+.lamp-base {
+  width: clamp(16px, 2.5vw, 30px);
+  height: clamp(4px, 0.7vw, 8px);
+  background: linear-gradient(to right, #5a4020, #8a6838, #5a4020);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.lamp-arm {
+  width: clamp(3px, 0.4vw, 4px);
+  background: #7a5828;
+  position: absolute;
+  &--lower {
+    height: clamp(20px, 3.5vw, 40px);
+    bottom: clamp(4px, 0.7vw, 8px);
+    transform: rotate(-20deg);
+    transform-origin: bottom center;
+  }
+  &--upper {
+    height: clamp(18px, 3vw, 35px);
+    bottom: clamp(20px, 3.7vw, 44px);
+    transform: rotate(30deg);
+    transform-origin: bottom center;
+  }
+}
+
+.lamp-head {
+  position: absolute;
+  bottom: clamp(36px, 6vw, 72px);
+  left: 50%;
+  transform: translateX(30%);
+  width: clamp(16px, 2.5vw, 28px);
+  height: clamp(10px, 1.5vw, 18px);
+  background: #c8a040;
+  border-radius: 50% 50% 0 0;
+  box-shadow: 0 clamp(4px, 0.8vw, 10px) clamp(10px, 2vw, 24px) rgba(255,200,80,0.6);
+}
+
+.lamp-bulb-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50% 50% 0 0;
+  background: rgba(255,220,100,0.4);
+  animation: lamp-flicker 4s ease-in-out infinite;
+}
+
+@keyframes lamp-flicker {
+  0%, 100% { opacity: 1; }
+  92%       { opacity: 1; }
+  93%       { opacity: 0.7; }
+  94%       { opacity: 1; }
+  96%       { opacity: 0.8; }
+  97%       { opacity: 1; }
+}
+
+// ── Mouse on desk ─────────────────────────────────────────────
+.desk-mouse {
+  position: relative;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+
+.mouse-body {
+  width: clamp(10px, 1.8vw, 20px);
+  height: clamp(16px, 2.5vw, 28px);
+  background: linear-gradient(to bottom, #d8d0b8, #b8b098);
+  border-radius: 40% 40% 50% 50%;
+  border: 1px solid #a8a088;
+  position: relative;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  &::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
     height: 20%;
-    background: #555;
-    margin: 0 auto;
+    background: #888;
+    border-radius: 2px;
   }
+}
 
-  &__base {
-    width: 50%;
-    height: 6px;
-    background: #444;
-    border-radius: 3px;
-  }
+.mouse-scroll {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 20%;
+  background: #888;
+  border-radius: 2px;
+}
+
+.mouse-cable {
+  width: 2px;
+  height: clamp(10px, 2vw, 20px);
+  background: #666;
+  margin: 0 auto;
+  border-radius: 1px;
+}
+
+// ── Office chair (behind desk) ─────────────────────────────────
+.office-chair {
+  position: absolute;
+  bottom: 20%;
+  right: 4%;
+  z-index: 2;
+}
+
+.chair-back {
+  width: clamp(30px, 5vw, 60px);
+  height: clamp(50px, 8vw, 90px);
+  background: linear-gradient(to right, #2a2a2a, #3a3a3a, #2a2a2a);
+  border-radius: 6px 6px 0 0;
+  border: 1px solid #1a1a1a;
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+}
+
+.chair-seat {
+  width: clamp(36px, 6vw, 70px);
+  height: clamp(12px, 2vw, 22px);
+  background: #333;
+  border-radius: 4px;
+  margin-left: -3px;
+  margin-top: 2px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+}
+
+.chair-arm {
+  position: absolute;
+  width: clamp(6px, 1vw, 12px);
+  height: clamp(16px, 2.5vw, 28px);
+  background: #2a2a2a;
+  border-radius: 2px;
+  top: clamp(30px, 4.5vw, 56px);
+  &--left  { left: -clamp(6px, 1vw, 12px); }
+  &--right { right: -clamp(6px, 1vw, 12px); }
+}
+
+.chair-pole {
+  width: clamp(4px, 0.7vw, 8px);
+  height: clamp(20px, 3.5vw, 40px);
+  background: #555;
+  margin: 0 auto;
+}
+
+.chair-base {
+  width: clamp(40px, 7vw, 80px);
+  height: clamp(6px, 1vw, 12px);
+  background: #444;
+  border-radius: 3px;
+  margin: 0 auto;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }

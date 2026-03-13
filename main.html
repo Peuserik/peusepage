@@ -7,152 +7,187 @@ scripts:
   - /assets/js/office.js
 ---
 
-<div class="office" id="office">
+<div class="monitor">
+  <div class="monitor__frame">
+    <div class="monitor__screen">
+      {% include controls.html %}
 
-  <!-- ── Background room ──────────────────────────────── -->
-  <div class="room">
+      <div class="office-room" id="office">
+        <!-- Ambient lamp glow overlay -->
+        <div class="room-glow" aria-hidden="true"></div>
 
-    <!-- Left wall + window -->
-    <div class="wall wall--left">
-      <div class="window" id="clickable-window" role="button" tabindex="0" aria-label="Open hobbies">
-        <div class="window__frame">
-          <div class="window__sky"></div>
-          <div class="window__landscape">
-            <div class="landscape__sun"></div>
-            <div class="landscape__tree landscape__tree--1"></div>
-            <div class="landscape__tree landscape__tree--2"></div>
-            <div class="landscape__grass"></div>
-            <div class="landscape__car"></div>
-            <div class="landscape__ball"></div>
+        <!-- Back wall -->
+        <div class="room-wall room-wall--back">
+          <!-- Certificate hung by thread -->
+          <div class="wall-cert" id="clickable-certificate" role="button" tabindex="0" aria-label="Open CV">
+            <div class="wall-cert__thread"></div>
+            <div class="wall-cert__frame">{% include certificate.html size="small" %}</div>
           </div>
-        </div>
-        <div class="window__sill"></div>
-      </div>
-    </div>
-
-    <!-- Back wall (top) -->
-    <div class="wall wall--back">
-      <!-- Certificate hung by thread -->
-      <div class="certificate-wall" id="clickable-certificate" role="button" tabindex="0" aria-label="Open CV">
-        <div class="certificate-wall__thread"></div>
-        <div class="certificate-wall__frame">
-          {% include certificate.html size="small" %}
-        </div>
-      </div>
-    </div>
-
-    <!-- Right wall + pinboard -->
-    <div class="wall wall--right">
-      <div class="pinboard" id="clickable-pinboard" role="button" tabindex="0" aria-label="Open updates">
-        <div class="pinboard__surface">
-          <div class="pinboard__pin pinboard__pin--1"></div>
-          <div class="pinboard__pin pinboard__pin--2"></div>
-          <div class="pinboard__note pinboard__note--1"></div>
-          <div class="pinboard__note pinboard__note--2"></div>
-          <div class="pinboard__note pinboard__note--3"></div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /.room -->
-
-  <!-- ── Foreground desk ──────────────────────────────── -->
-  <div class="desk-area">
-
-    <!-- Desk surface -->
-    <div class="desk">
-      <!-- Lamp -->
-      <div class="lamp">
-        <div class="lamp__arm"></div>
-        <div class="lamp__head">
-          <div class="lamp__glow"></div>
-        </div>
-        <div class="lamp__base"></div>
-      </div>
-
-      <!-- Coffee cup -->
-      <div class="coffee">
-        <div class="coffee__steam">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="coffee__cup">
-          <div class="coffee__liquid"></div>
-        </div>
-        <div class="coffee__saucer"></div>
-      </div>
-
-      <!-- Monitor (clickable) -->
-      <div class="desk-monitor" id="clickable-monitor" role="button" tabindex="0" aria-label="Open desktop">
-        <div class="desk-monitor__stand"></div>
-        <div class="desk-monitor__body">
-          <div class="desk-monitor__bezel">
-            <canvas class="matrix-canvas" id="matrix-canvas" aria-hidden="true"></canvas>
-            <!-- Desktop state shown when CV popup active -->
-            <div class="desk-monitor__desktop" id="monitor-desktop" aria-hidden="true">
-              <div class="desktop-bar"></div>
-              <div class="desktop-file">
-                <div class="file-icon">📄</div>
-                <div class="file-lines">
-                  <div></div><div></div><div></div><div></div>
-                </div>
-              </div>
+          <!-- Clock -->
+          <div class="wall-clock" aria-hidden="true">
+            <div class="clock__face">
+              <div class="clock__hand clock__hand--hour"></div>
+              <div class="clock__hand clock__hand--minute"></div>
+              <div class="clock__center"></div>
             </div>
           </div>
         </div>
-        <div class="desk-monitor__brand">●</div>
-      </div>
 
-      <!-- Mouse + mousepad -->
-      <div class="mousepad">
-        <div class="mouse">
-          <div class="mouse__body">
-            <div class="mouse__btn mouse__btn--left"></div>
-            <div class="mouse__btn mouse__btn--right"></div>
-            <div class="mouse__wheel"></div>
+        <!-- Left side: window -->
+        <div class="room-wall room-wall--left">
+          <div class="window-wrap" id="clickable-window" role="button" tabindex="0" aria-label="Open hobbies">
+            <div class="window-frame">
+              <div class="window-panes">
+                <div class="win-sky"></div>
+                <div class="win-landscape">
+                  <div class="win-tree win-tree--1"></div>
+                  <div class="win-tree win-tree--2"></div>
+                  <div class="win-grass"></div>
+                  <div class="win-car"></div>
+                </div>
+              </div>
+            </div>
+            <div class="window-sill"></div>
           </div>
-          <div class="mouse__cable"></div>
+        </div>
+
+        <!-- Right side: bookshelf + pinboard -->
+        <div class="room-wall room-wall--right">
+          <div class="bookshelf" aria-hidden="true">
+            <div class="shelf-plank"></div>
+            <div class="book book--1"></div>
+            <div class="book book--2"></div>
+            <div class="book book--3"></div>
+            <div class="book book--4"></div>
+            <div class="shelf-car"></div>
+          </div>
+          <div class="corkboard" id="clickable-pinboard" role="button" tabindex="0" aria-label="Open updates">
+            <div class="cork-note cork-note--1"></div>
+            <div class="cork-note cork-note--2"></div>
+            <div class="cork-note cork-note--3"></div>
+            <div class="cork-pin cork-pin--1"></div>
+            <div class="cork-pin cork-pin--2"></div>
+            <div class="cork-pin cork-pin--3"></div>
+          </div>
+        </div>
+
+        <!-- Floor -->
+        <div class="room-floor" aria-hidden="true"></div>
+
+        <!-- Desk scene -->
+        <div class="desk-scene">
+          <!-- Trash can -->
+          <div class="trash-can" aria-hidden="true">
+            <div class="trash-can__body"></div>
+          </div>
+
+          <!-- Desk -->
+          <div class="desk">
+            <div class="desk__surface">
+              <!-- Coffee mug -->
+              <div class="desk-coffee" aria-hidden="true">
+                <div class="coffee-steam"><span></span><span></span></div>
+                <div class="coffee-cup"><div class="coffee-liquid"></div></div>
+              </div>
+
+              <!-- CRT Monitor (clickable) -->
+              <div class="crt-monitor" id="clickable-monitor" role="button" tabindex="0" aria-label="Open menu">
+                <div class="crt-body">
+                  <div class="crt-screen">
+                    <canvas id="matrix-canvas" aria-hidden="true"></canvas>
+                    <div class="crt-desktop" id="monitor-desktop" aria-hidden="true">
+                      <div class="desktop-topbar"></div>
+                      <div class="desktop-file"><span>📄</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="crt-stand"></div>
+                <div class="crt-base"></div>
+              </div>
+
+              <!-- Keyboard -->
+              <div class="keyboard" aria-hidden="true">
+                <div class="keyboard__body">
+                  <div class="key-row key-row--1"></div>
+                  <div class="key-row key-row--2"></div>
+                  <div class="key-row key-row--3"></div>
+                </div>
+              </div>
+
+              <!-- Lamp -->
+              <div class="desk-lamp" aria-hidden="true">
+                <div class="lamp-base"></div>
+                <div class="lamp-arm lamp-arm--lower"></div>
+                <div class="lamp-arm lamp-arm--upper"></div>
+                <div class="lamp-head">
+                  <div class="lamp-bulb-glow"></div>
+                </div>
+              </div>
+
+              <!-- Mouse -->
+              <div class="desk-mouse" aria-hidden="true">
+                <div class="mouse-body">
+                  <div class="mouse-scroll"></div>
+                </div>
+                <div class="mouse-cable"></div>
+              </div>
+            </div>
+
+            <!-- Desk front face + drawers -->
+            <div class="desk__front">
+              <div class="desk-drawer desk-drawer--1"></div>
+              <div class="desk-drawer desk-drawer--2"></div>
+              <div class="desk-drawer desk-drawer--3"></div>
+            </div>
+            <div class="desk__side"></div>
+          </div>
+
+          <!-- Chair -->
+          <div class="office-chair" aria-hidden="true">
+            <div class="chair-back"></div>
+            <div class="chair-seat"></div>
+            <div class="chair-arm chair-arm--left"></div>
+            <div class="chair-arm chair-arm--right"></div>
+            <div class="chair-pole"></div>
+            <div class="chair-base"></div>
+          </div>
         </div>
       </div>
 
-    </div><!-- /.desk -->
+    </div><!-- /.monitor__screen -->
+  </div><!-- /.monitor__frame -->
+</div><!-- /.monitor -->
 
-    <!-- Chair -->
-    <div class="chair">
-      <div class="chair__back"></div>
-      <div class="chair__seat"></div>
-      <div class="chair__pole"></div>
-      <div class="chair__base"></div>
+<!-- ── Popups (outside monitor) ──────────────────────────── -->
+
+<!-- Desktop / Main Menu popup -->
+<div class="popup-overlay retro-window" id="popup-desktop" role="dialog" aria-modal="true">
+  <div class="retro-win__outer">
+    <div class="retro-win__titlebar">
+      <span class="retro-win__icon">📁</span>
+      <span class="retro-win__title">MAIN MENU</span>
+      <div class="retro-win__controls">
+        <button class="retro-btn retro-btn--min" data-close="popup-desktop">_</button>
+        <button class="retro-btn retro-btn--max">□</button>
+        <button class="retro-btn retro-btn--close" data-close="popup-desktop">✕</button>
+      </div>
     </div>
-
-  </div><!-- /.desk-area -->
-
-</div><!-- /.office -->
-
-<!-- ── Desktop popup (app grid) ──────────────────────── -->
-<div class="popup-overlay" id="popup-desktop" role="dialog" aria-modal="true" aria-label="Desktop">
-  <div class="popup-window popup-window--desktop">
-    <button class="popup-close" data-close="popup-desktop" aria-label="Close">✕</button>
-    <div class="desktop-apps">
-      <button class="app-icon" data-open="popup-cv">
-        <span class="app-icon__img">📋</span>
-        <span class="app-icon__label" data-i18n="popup_cv">CV</span>
-      </button>
-      <button class="app-icon" data-open="popup-hobbies">
-        <span class="app-icon__img">🎮</span>
-        <span class="app-icon__label" data-i18n="popup_hobbies">Hobbies</span>
-      </button>
-      <button class="app-icon" data-open="popup-pinboard">
-        <span class="app-icon__img">📌</span>
-        <span class="app-icon__label" data-i18n="popup_pinboard">Updates</span>
-      </button>
-      <a class="app-icon" href="{{ site.data.config.social.github }}" target="_blank" rel="noopener">
-        <span class="app-icon__img">⌥</span>
-        <span class="app-icon__label">GitHub</span>
-      </a>
-      <a class="app-icon" href="mailto:{{ site.data.config.social.email }}">
-        <span class="app-icon__img">✉</span>
-        <span class="app-icon__label" data-i18n="contact_email">Email</span>
-      </a>
+    <div class="retro-win__body desktop-grid">
+      <button class="app-tile" data-open="popup-cv"><span class="app-tile__icon">🪪</span><span class="app-tile__label">ABOUT</span></button>
+      <button class="app-tile" data-open="popup-cv"><span class="app-tile__icon">💼</span><span class="app-tile__label">CAREER</span></button>
+      <button class="app-tile"><span class="app-tile__icon">🗂️</span><span class="app-tile__label">PROJECTS</span></button>
+      <a class="app-tile" href="mailto:{{ site.data.config.social.email }}"><span class="app-tile__icon">✉️</span><span class="app-tile__label">CONTACT</span></a>
+      <button class="app-tile" data-open="popup-hobbies"><span class="app-tile__icon">🎮</span><span class="app-tile__label">HOBBIES</span></button>
+      <button class="app-tile"><span class="app-tile__icon">⚙️</span><span class="app-tile__label">SKILLS</span></button>
+      <button class="app-tile" data-open="popup-cv"><span class="app-tile__icon">📄</span><span class="app-tile__label">RESUME</span></button>
+      <button class="app-tile" data-open="popup-cv"><span class="app-tile__icon">🔗</span><span class="app-tile__label">LINKS</span></button>
+      <button class="app-tile"><span class="app-tile__icon">📝</span><span class="app-tile__label">BLOG</span></button>
+      <a class="app-tile" href="{{ site.data.config.social.github }}" target="_blank" rel="noopener"><span class="app-tile__icon">🐙</span><span class="app-tile__label">GITHUB</span></a>
+      <button class="app-tile" data-open="popup-cv"><span class="app-tile__icon">🌐</span><span class="app-tile__label">SOCIAL</span></button>
+      <a class="app-tile" href="mailto:{{ site.data.config.social.email }}"><span class="app-tile__icon">📬</span><span class="app-tile__label">EMAIL</span></a>
+    </div>
+    <div class="retro-win__statusbar">
+      <span>12 items</span><span class="retro-clock" id="retro-clock">00:00</span>
     </div>
   </div>
 </div>
