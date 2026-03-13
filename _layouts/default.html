@@ -4,9 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ page.title | default: site.title }}</title>
-  {% seo %}
+  {% if site.plugins contains 'jekyll-seo-tag' %}{% seo %}{% endif %}
 
-  <!-- Google Fonts: cycling welcome fonts -->
+  <!-- settings.js inline-equivalent: restore theme/mode before first paint -->
+  <script>
+    (function(){
+      var h = document.documentElement;
+      var m = localStorage.getItem('psp_mode');
+      var t = localStorage.getItem('psp_theme');
+      var l = localStorage.getItem('psp_lang');
+      if (m) h.setAttribute('data-mode',  m);
+      if (t) h.setAttribute('data-theme', t);
+      if (l) h.setAttribute('lang', l);
+    })();
+  </script>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Grotesk:wght@700&family=Bebas+Neue&family=Cinzel:wght@700&family=Special+Elite&family=Major+Mono+Display&display=swap" rel="stylesheet" />
@@ -24,6 +37,7 @@
 </head>
 <body class="{{ page.body_class }}">
   {{ content }}
+  <!-- settings.js must load before page scripts so Settings API is available -->
   <script src="{{ '/assets/js/settings.js' | relative_url }}"></script>
   {% if page.scripts %}
     {% for script in page.scripts %}

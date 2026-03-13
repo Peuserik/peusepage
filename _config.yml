@@ -6,8 +6,7 @@ url: "https://example.com" # TODO: replace with your custom domain
 # Build settings
 markdown: kramdown
 theme: null
-plugins:
-  - jekyll-seo-tag
+# No extra plugins required — github-pages gem includes everything needed
 
 # Exclude from build
 exclude:
@@ -16,7 +15,6 @@ exclude:
   - README.md
   - node_modules
 
-# Sass
+# Sass — partials live in _sass/ (Jekyll default)
 sass:
   style: compressed
-  sass_dir: assets/css
