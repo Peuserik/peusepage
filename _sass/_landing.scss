@@ -2,62 +2,107 @@
 // LANDING PAGE — monitor frame, screensaver, certificate, controls
 // ============================================================
 
-// ── Monitor shell ────────────────────────────────────────────
+// ── Monitor shell — plastic CRT bezel ────────────────────────
+// .monitor  = outer plastic shell (padding IS the bezel)
+// .monitor__frame = screen recess (positioned context for screen)
+// .monitor__screen = actual display area (position: absolute, fills frame)
+
 .monitor {
   position: fixed;
   inset: 0;
+  // Plastic gradient — lighter on top-left edge (3D illusion)
+  background:
+    linear-gradient(165deg,
+      #2e2820 0%,
+      #1e1a14 30%,
+      #0e0c08 60%,
+      #181410 100%
+    );
+  // Padding creates the bezel thickness
+  --bezel-side:   clamp(24px, 4vw, 52px);
+  --bezel-top:    clamp(20px, 3.5vw, 44px);
+  --bezel-bottom: clamp(60px, 9vw, 100px); // thicker bottom for controls
+  padding:
+    var(--bezel-top)
+    var(--bezel-side)
+    var(--bezel-bottom);
   display: flex;
   align-items: stretch;
-  justify-content: stretch;
+
+  // Top-edge plastic highlight
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: var(--bezel-top);
+    background: linear-gradient(to bottom,
+      rgba(255,255,255,0.06) 0%,
+      transparent 100%);
+    pointer-events: none;
+    z-index: 60;
+  }
+
+  // Brand mark at bottom-centre
+  &::after {
+    content: '● PEUSEPAGE ●';
+    position: absolute;
+    bottom: 1.1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    color: #2a2018;
+    white-space: nowrap;
+    pointer-events: none;
+  }
 }
 
 .monitor__frame {
   flex: 1;
-  background: #0a0804;
-  border: clamp(20px, 3.5vw, 40px) solid #111;
+  position: relative; // positioning context for screen + controls
+  background: #060402;
+  border-radius: 4px;
+  // Screen-recess depth: layered inner borders
   box-shadow:
-    inset 0 0 0 3px #2a2010,
-    0 0 0 2px #000,
-    0 0 60px rgba(0,0,0,0.9);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  border-radius: 6px;
-
-  // Subtle bevel
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 4px;
-    box-shadow: inset 0 2px 4px rgba(255,255,255,0.06);
-    pointer-events: none;
-    z-index: 10;
-  }
+    0 0 0 3px #0e0c08,
+    0 0 0 5px #1e1a14,
+    inset 0 0 0 2px #2a2218,
+    inset 0 0 30px rgba(0,0,0,0.9);
 }
 
 // ── Screen ───────────────────────────────────────────────────
 .monitor__screen {
-  flex: 1;
+  position: absolute;
+  inset: 0;
   background: var(--color-bg-screen);
-  cursor: pointer;
-  position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
+  border-radius: 3px;
 
   // CRT screen glow
-  box-shadow: inset 0 0 80px rgba(0,0,0,0.6), inset 0 0 20px var(--color-glow);
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 60px rgba(0,0,0,0.5), inset 0 0 20px var(--color-glow);
+    pointer-events: none;
+    z-index: 10;
+    border-radius: 3px;
+  }
 
-  // Slight screen curvature illusion
-  border-radius: 4px;
+  // Landing: flex-centred content + pointer
+  .page-landing & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    cursor: pointer;
+  }
 
   &:focus-visible {
-    outline: 3px solid var(--color-accent);
-    outline-offset: -3px;
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
   }
 }
 
@@ -181,14 +226,14 @@
   50%       { opacity: 1;   }
 }
 
-// ── Controls ─────────────────────────────────────────────────
+// ── Controls — sit in the bezel (bottom-right of .monitor) ──
 .controls {
   position: absolute;
-  bottom: 0.75rem;
-  right: 0.75rem;
+  bottom: 1.4rem;
+  right: 2rem;
   display: flex;
   gap: 0.5rem;
-  z-index: 20;
+  z-index: 50;
 
   &__btn {
     width: 36px;
@@ -213,8 +258,8 @@
 // Theme picker dropdown
 .theme-picker {
   position: absolute;
-  bottom: 3.5rem;
-  right: 0.75rem;
+  bottom: 4.5rem;
+  right: 2rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 6px;

@@ -29,64 +29,63 @@
 
   &--back {
     top: 0;
-    left: 18%;
-    right: 18%;
-    height: 62%;
-    background: linear-gradient(to bottom, #6b5038 0%, #5a4028 40%, #3d2a18 100%);
-    // Wood wainscoting on lower back wall
+    left: 20%;
+    right: 20%;
+    height: 60%;
+    // More distinct colour vs room background
+    background: linear-gradient(to bottom,
+      #8a6848 0%,
+      #7a5838 50%,
+      #4a3020 100%);
+    // Wood wainscoting on lower 35%
     &::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       height: 35%;
       background: repeating-linear-gradient(
         90deg,
-        #2a1808 0px, #3d2418 20px, #2a1808 22px
+        #2a1808 0px, #3d2418 18px, #2a1808 20px
       );
+      border-top: 2px solid #6a4a28;
     }
   }
 
   &--left {
     top: 0;
     left: 0;
-    width: 20%;
-    height: 62%;
-    background: linear-gradient(to right, #2a1808 0%, #4a3018 60%, #3a2810 100%);
-    // Wood wainscoting
+    width: 22%;
+    height: 60%;
+    background: linear-gradient(to right, #3a2410 0%, #6a4a30 80%, #8a6848 100%);
     &::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       height: 35%;
       background: repeating-linear-gradient(
         90deg,
-        #1e1206 0px, #2e1a0c 20px, #1e1206 22px
+        #1e1206 0px, #2e1a0c 18px, #1e1206 20px
       );
+      border-top: 2px solid #4a3018;
     }
   }
 
   &--right {
     top: 0;
     right: 0;
-    width: 20%;
-    height: 62%;
-    background: linear-gradient(to left, #2a1808 0%, #4a3018 60%, #3a2810 100%);
-    // Wood wainscoting
+    width: 22%;
+    height: 60%;
+    background: linear-gradient(to left, #3a2410 0%, #6a4a30 80%, #8a6848 100%);
     &::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       height: 35%;
       background: repeating-linear-gradient(
         90deg,
-        #1e1206 0px, #2e1a0c 20px, #1e1206 22px
+        #1e1206 0px, #2e1a0c 18px, #1e1206 20px
       );
+      border-top: 2px solid #4a3018;
     }
     display: flex;
     flex-direction: column;
@@ -445,53 +444,55 @@
 }
 
 // ── Desk scene ─────────────────────────────────────────────────
+// Items sit on the desk surface at ~38% from top of desk-scene.
+// Below: desk front face + drawers.
 .desk-scene {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50%;
+  height: 58%;
   z-index: 3;
 }
 
-// ── Desk ──────────────────────────────────────────────────────
+// ── Desk body (front face + surface edge) ─────────────────────
 .desk {
   position: absolute;
-  bottom: 22%;
-  left: 8%;
-  right: 10%;
-  display: flex;
-  flex-direction: column;
+  top: 38%;           // desk surface level
+  left: 4%;
+  right: 4%;
+  bottom: 0;
+  border-top: clamp(10px, 1.5vw, 18px) solid #8a5a28;
+  background: linear-gradient(to bottom, #4a2e18 0%, #3a2010 100%);
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.6), inset 2px 0 8px rgba(0,0,0,0.4);
 }
 
-.desk__surface {
-  height: clamp(40px, 6vw, 80px);
-  background: linear-gradient(to bottom, #5a3820 0%, #4a2e18 100%);
-  border-radius: 4px 4px 0 0;
-  position: relative;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+// ── Items container — bottom aligns with desk surface ─────────
+.desk-items {
+  position: absolute;
+  bottom: 62%;        // = 100% - 38% = top of desk
+  left: 6%;
+  right: 6%;
+  height: 38%;        // space above desk
   display: flex;
   align-items: flex-end;
-  padding: 0 2%;
-  gap: 2%;
+  justify-content: center;
+  gap: clamp(10px, 2.5vw, 36px);
+  padding: 0 4%;
+  overflow: visible;
 }
 
-.desk__front {
-  height: clamp(30px, 4.5vw, 60px);
-  background: #3a2010;
-  display: flex;
-  gap: 4px;
-  padding: 6px 8px;
-}
-
-.desk__side {
+// ── Desk drawers (on front face) ─────────────────────────────
+.desk__drawers {
   position: absolute;
-  right: -3%;
-  top: 0;
-  bottom: 0;
-  width: 3%;
-  background: #2a1808;
-  transform: skewY(-3deg);
+  top: clamp(10px, 1.5vw, 18px); // below surface border
+  left: 8px;
+  width: 22%;
+  bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
 }
 
 .desk-drawer {
@@ -660,7 +661,7 @@
   width: clamp(10px, 1.5vw, 18px);
   height: clamp(6px, 1vw, 12px);
   background: #b4a990;
-  clip-path: trapezoid;
+  clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
   // Simple trapezoid via borders
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;

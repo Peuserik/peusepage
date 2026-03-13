@@ -11,9 +11,7 @@ scripts:
 <!-- Monitor shell -->
 <div class="monitor" id="monitor">
 
-  <!-- Bezel/Frame (NOT clickable to enter) -->
   <div class="monitor__frame">
-
     <!-- Screen (clickable to enter) -->
     <div class="monitor__screen scanlines" id="screen" role="button" tabindex="0"
          aria-label="Click anywhere to enter">
@@ -35,11 +33,11 @@ scripts:
       <p class="screen__hint" id="screen-hint" data-i18n="tagline_cta">Click anywhere to enter</p>
 
     </div><!-- /.monitor__screen -->
-
-    <!-- Control buttons (bottom-right of frame) -->
-    {% include controls.html %}
-
   </div><!-- /.monitor__frame -->
+
+  <!-- Controls sit in the bezel (outside the screen) -->
+  {% include controls.html %}
+
 </div><!-- /.monitor -->
 
 <!-- OS-style transition overlay -->

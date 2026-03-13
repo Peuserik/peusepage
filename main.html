@@ -10,7 +10,6 @@ scripts:
 <div class="monitor">
   <div class="monitor__frame">
     <div class="monitor__screen">
-      {% include controls.html %}
 
       <div class="office-room" id="office">
         <!-- Ambient lamp glow overlay -->
@@ -81,66 +80,65 @@ scripts:
             <div class="trash-can__body"></div>
           </div>
 
-          <!-- Desk -->
+          <!-- Desk front face + drawers -->
           <div class="desk">
-            <div class="desk__surface">
-              <!-- Coffee mug -->
-              <div class="desk-coffee" aria-hidden="true">
-                <div class="coffee-steam"><span></span><span></span></div>
-                <div class="coffee-cup"><div class="coffee-liquid"></div></div>
-              </div>
-
-              <!-- CRT Monitor (clickable) -->
-              <div class="crt-monitor" id="clickable-monitor" role="button" tabindex="0" aria-label="Open menu">
-                <div class="crt-body">
-                  <div class="crt-screen">
-                    <canvas id="matrix-canvas" aria-hidden="true"></canvas>
-                    <div class="crt-desktop" id="monitor-desktop" aria-hidden="true">
-                      <div class="desktop-topbar"></div>
-                      <div class="desktop-file"><span>📄</span></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="crt-stand"></div>
-                <div class="crt-base"></div>
-              </div>
-
-              <!-- Keyboard -->
-              <div class="keyboard" aria-hidden="true">
-                <div class="keyboard__body">
-                  <div class="key-row key-row--1"></div>
-                  <div class="key-row key-row--2"></div>
-                  <div class="key-row key-row--3"></div>
-                </div>
-              </div>
-
-              <!-- Lamp -->
-              <div class="desk-lamp" aria-hidden="true">
-                <div class="lamp-base"></div>
-                <div class="lamp-arm lamp-arm--lower"></div>
-                <div class="lamp-arm lamp-arm--upper"></div>
-                <div class="lamp-head">
-                  <div class="lamp-bulb-glow"></div>
-                </div>
-              </div>
-
-              <!-- Mouse -->
-              <div class="desk-mouse" aria-hidden="true">
-                <div class="mouse-body">
-                  <div class="mouse-scroll"></div>
-                </div>
-                <div class="mouse-cable"></div>
-              </div>
-            </div>
-
-            <!-- Desk front face + drawers -->
-            <div class="desk__front">
+            <div class="desk__drawers">
               <div class="desk-drawer desk-drawer--1"></div>
               <div class="desk-drawer desk-drawer--2"></div>
               <div class="desk-drawer desk-drawer--3"></div>
             </div>
-            <div class="desk__side"></div>
           </div>
+
+          <!-- Items sitting ON the desk surface -->
+          <div class="desk-items">
+            <!-- Coffee mug -->
+            <div class="desk-coffee" aria-hidden="true">
+              <div class="coffee-steam"><span></span><span></span></div>
+              <div class="coffee-cup"><div class="coffee-liquid"></div></div>
+            </div>
+
+            <!-- CRT Monitor (clickable) -->
+            <div class="crt-monitor" id="clickable-monitor" role="button" tabindex="0" aria-label="Open menu">
+              <div class="crt-body">
+                <div class="crt-screen">
+                  <canvas id="matrix-canvas" aria-hidden="true"></canvas>
+                  <div class="crt-desktop" id="monitor-desktop" aria-hidden="true">
+                    <div class="desktop-topbar"></div>
+                    <div class="desktop-file"><span>📄</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="crt-stand"></div>
+              <div class="crt-base"></div>
+            </div>
+
+            <!-- Keyboard -->
+            <div class="keyboard" aria-hidden="true">
+              <div class="keyboard__body">
+                <div class="key-row key-row--1"></div>
+                <div class="key-row key-row--2"></div>
+                <div class="key-row key-row--3"></div>
+              </div>
+            </div>
+
+            <!-- Lamp -->
+            <div class="desk-lamp" aria-hidden="true">
+              <div class="lamp-base"></div>
+              <div class="lamp-arm lamp-arm--lower"></div>
+              <div class="lamp-arm lamp-arm--upper"></div>
+              <div class="lamp-head">
+                <div class="lamp-bulb-glow"></div>
+              </div>
+            </div>
+
+            <!-- Mouse -->
+            <div class="desk-mouse" aria-hidden="true">
+              <div class="mouse-body">
+                <div class="mouse-scroll"></div>
+              </div>
+              <div class="mouse-cable"></div>
+            </div>
+          </div><!-- /.desk-items -->
 
           <!-- Chair -->
           <div class="office-chair" aria-hidden="true">
@@ -156,6 +154,10 @@ scripts:
 
     </div><!-- /.monitor__screen -->
   </div><!-- /.monitor__frame -->
+
+  <!-- Controls sit in the bezel (outside the screen) -->
+  {% include controls.html %}
+
 </div><!-- /.monitor -->
 
 <!-- ── Popups (outside monitor) ──────────────────────────── -->
