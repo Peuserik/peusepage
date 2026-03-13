@@ -31,6 +31,7 @@
       translations: {{ site.data.translations | jsonify }},
       config: {{ site.data.config | jsonify }}
     };
+    window.SITE_MAINURL = '{{ "/main.html" | relative_url }}';
   </script>
 </head>
 <body class="{{ page.body_class }}">

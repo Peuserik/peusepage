@@ -50,7 +50,8 @@
 
     // Phase 4 — navigate (1200ms)
     setTimeout(() => {
-      window.location.href = './main.html';
+      // Use baseurl-aware path injected by Jekyll, fallback to relative
+      window.location.href = window.SITE_MAINURL || './main.html';
     }, duration + 200);
   }
 
